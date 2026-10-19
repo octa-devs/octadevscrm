@@ -1,0 +1,16 @@
+# builds & caches
+node_modules/
+.next/
+out/
+tsconfig.tsbuildinfo
+
+# environment & secrets — never commit
+.env
+.env.*
+!.env.example
+cookies*.txt
+
+# logs & OS noise
+*.log
+.DS_Store
+Thumbs.db
