@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
 import { admin } from '@/lib/crm';
+import { BRAND, notifyDiscord } from '@/lib/discord';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,5 +95,19 @@ export async function POST(req: NextRequest, { params }: Ctx) {
   }
 
   const { data: conversation } = await db.from('chat_conversations').select(FIELDS).eq('id', id).maybeSingle();
+
+  if (message) {
+    await notifyDiscord({
+      title: 'Team replied to a visitor',
+      color: BRAND.ok,
+      timestamp: message.created_at,
+      fields: [
+        { name: 'Visitor', value: conversation?.visitor_name || conversation?.visitor_email || 'Unknown', inline: true },
+        { name: 'Sent by', value: user.email, inline: true },
+        { name: 'Message', value: message.body.slice(0, 200) || '—' },
+      ],
+    });
+  }
+
   return NextResponse.json({ conversation, message });
 }
