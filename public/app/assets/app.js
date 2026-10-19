@@ -191,17 +191,33 @@ export async function boot(pageId) {
 
   // Sign-in identity in the rail footer.
   const user = await requireUser();
+
+  // Hide rail items this account holds no permission for (any-of a comma list).
+  document.querySelectorAll('.nav-item[data-perm]').forEach((el) => {
+    if (!can(user, el.dataset.perm)) {
+      el.closest('li')?.remove() ?? el.remove();
+    }
+  });
+
   const whoami = document.querySelector('.whoami');
   if (whoami) whoami.textContent = user?.email ?? '';
 
   document.querySelectorAll('[data-signout]').forEach((b) => b.addEventListener('click', signOut));
 
   // Chat badge: unread conversations for the rail.
-  refreshBadge();
+  if (can(user, 'chat.inbox')) refreshBadge();
 
   spotlight(document);
   reveal(document);
   return user;
+}
+
+/** Does this account hold the permission? `perm` may be "a|b" for any-of. */
+export function can(user, perm) {
+  if (!user?.permissions) return true; // api unreachable — fail open to keep the app usable; the server still gates.
+  if (user.role === 'super_admin') return true;
+  const perms = user.permissions;
+  return String(perm).split('|').some((p) => perms.includes('*') || perms.includes(p));
 }
 
 export async function refreshBadge() {

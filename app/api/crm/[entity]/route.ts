@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifySession } from '@/lib/auth';
+import { verifySession, userHas } from '@/lib/auth';
 import { readEntity, writeEntity, genId } from '@/lib/crm';
 
 const ALLOWED = ['leads', 'contacts', 'deals', 'tasks'];
 
-async function guard(entity: string) {
+async function guard(entity: string, edit = false) {
   if (!ALLOWED.includes(entity)) return NextResponse.json({ error: 'Bad entity' }, { status: 400 });
   const user = await verifySession();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (edit && !(await userHas(user, 'crm.write'))) {
+    return NextResponse.json({ error: 'You can look at records, but not change them.' }, { status: 403 });
+  }
   return null;
 }
 
@@ -18,7 +21,7 @@ export async function GET(req: NextRequest, { params }: { params: { entity: stri
 }
 
 export async function POST(req: NextRequest, { params }: { params: { entity: string } }) {
-  const bad = await guard(params.entity);
+  const bad = await guard(params.entity, true);
   if (bad) return bad;
   const user = (await verifySession())!;
   const body = await req.json();
@@ -30,7 +33,7 @@ export async function POST(req: NextRequest, { params }: { params: { entity: str
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { entity: string } }) {
-  const bad = await guard(params.entity);
+  const bad = await guard(params.entity, true);
   if (bad) return bad;
   const body = await req.json();
   const items = await readEntity(params.entity);
@@ -42,7 +45,7 @@ export async function PUT(req: NextRequest, { params }: { params: { entity: stri
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { entity: string } }) {
-  const bad = await guard(params.entity);
+  const bad = await guard(params.entity, true);
   if (bad) return bad;
   const id = new URL(req.url).searchParams.get('id');
   const items = await readEntity(params.entity);

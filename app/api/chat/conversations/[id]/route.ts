@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifySession } from '@/lib/auth';
+import { requirePerm } from '@/lib/auth';
 import { admin } from '@/lib/crm';
 import { BRAND, notifyDiscord } from '@/lib/discord';
 
@@ -14,8 +14,9 @@ type Ctx = { params: { id: string } };
 
 /** One thread's messages, plus the visitor's context. Opening it marks it read. */
 export async function GET(_req: NextRequest, { params }: Ctx) {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.inbox');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const id = params.id;
   if (!UUID.test(id)) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -47,8 +48,9 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
 }
 
 export async function POST(req: NextRequest, { params }: Ctx) {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.inbox');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const id = params.id;
   if (!UUID.test(id)) return NextResponse.json({ error: 'Not found' }, { status: 404 });

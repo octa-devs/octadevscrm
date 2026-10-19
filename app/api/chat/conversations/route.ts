@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifySession } from '@/lib/auth';
+import { requirePerm } from '@/lib/auth';
 import { admin } from '@/lib/crm';
 
 export const dynamic = 'force-dynamic';
@@ -9,8 +9,9 @@ export const dynamic = 'force-dynamic';
  * visitor's only credential, and the CRM has no reason to hold it.
  */
 export async function GET() {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.inbox');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const db = admin();
   const { data: rows, error } = await db

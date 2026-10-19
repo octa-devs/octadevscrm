@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireSuper } from '@/lib/auth';
+import { requirePerm, roleExists } from '@/lib/auth';
 import { admin } from '@/lib/crm';
 
 /**
@@ -18,7 +18,7 @@ const handle = (u: { email?: string | null; user_metadata?: any }) =>
   'member';
 
 export async function GET() {
-  if (!(await requireSuper())) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  if (!(await requirePerm('people.manage'))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   if (_usersCache && Date.now() - _usersCache.at < USERS_TTL_MS) return NextResponse.json(_usersCache.rows);
 
   const { data, error } = await admin().auth.admin.listUsers();
@@ -36,10 +36,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!(await requireSuper())) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  if (!(await requirePerm('people.manage'))) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   const body = await req.json();
   if (!body.email || !body.password) return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 });
   const role = body.role || 'employee';
+  if (!(await roleExists(role))) return NextResponse.json({ error: `Unknown role "${role}".` }, { status: 400 });
   const username = typeof body.username === 'string' ? body.username.trim() : '';
   const { data, error } = await admin().auth.admin.createUser({
     email: body.email,
@@ -54,8 +55,17 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  if (!(await requireSuper())) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const me = await requirePerm('people.manage');
+  if (!me) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   const body = await req.json();
+  if (body.role && !(await roleExists(String(body.role)))) {
+    return NextResponse.json({ error: `Unknown role "${body.role}".` }, { status: 400 });
+  }
+  // Changing your own role while it is your only way to manage people is how
+  // teams get locked out. Refuse it; a second manager can do it instead.
+  if (body.id === me.id && body.role && body.role !== me.role) {
+    return NextResponse.json({ error: "You can't change your own role. Ask another manager to do it." }, { status: 400 });
+  }
   const updates: Record<string, any> = {};
   if (body.email) updates.email = body.email;
   if (body.password) updates.password = body.password;
@@ -80,7 +90,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const me = await requireSuper();
+  const me = await requirePerm('people.manage');
   if (!me) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   const id = new URL(req.url).searchParams.get('id');
   if (id === me.id) return NextResponse.json({ error: "You can't delete your own account." }, { status: 400 });

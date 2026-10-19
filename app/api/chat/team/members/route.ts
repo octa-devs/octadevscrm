@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifySession } from '@/lib/auth';
+import { requirePerm } from '@/lib/auth';
 import { admin } from '@/lib/crm';
 
 export const dynamic = 'force-dynamic';
@@ -10,8 +10,9 @@ export const dynamic = 'force-dynamic';
  * returns only what a room needs to render a name and open a thread.
  */
 export async function GET() {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.team');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { data, error } = await admin().auth.admin.listUsers({ page: 1, perPage: 200 });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

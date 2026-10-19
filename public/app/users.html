@@ -33,8 +33,9 @@
         </ul>
         <div class="group-label eyebrow">Admin</div>
         <ul>
-          <li><a class="nav-item" data-page="website" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
-          <li><a class="nav-item" data-page="users" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+          <li><a class="nav-item" data-page="website" data-perm="website.manage" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" data-perm="people.manage|roles.manage" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+          <li><a class="nav-item" data-page="roles" data-perm="roles.manage" href="/app/roles.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Roles</span></a></li>
         </ul>
       </nav>
       <div class="foot">
@@ -89,20 +90,26 @@
     const user = await O.boot('users');
 
     let users = null;
+    let roleList = null;
     let editing = null;
     const list = document.getElementById('list');
     const modal = document.getElementById('modal');
-    const label = { super_admin: 'Super user', admin: 'Admin', employee: 'Employee' };
+    const LABEL = { super_admin: 'Super user' };
+    const roleLabel = (key) => LABEL[key] ?? roleList?.find((r) => r.key === key)?.name ?? key;
 
     O.wireModal(modal);
     modal.querySelector('.modal-head [data-close]').innerHTML = O.icons.close;
 
     async function load() {
+      // Role catalogue first (cheap, also what the modal dropdown needs).
+      try {
+        roleList = (await O.api('/api/roles')).roles ?? [];
+      } catch { roleList = null; }
       try { users = await O.api('/api/users'); }
       catch (e) {
         users = [];
         O.toast(e.message, 'err');
-        list.innerHTML = `<div class="empty"><b>Super users only</b><p>Your account can't manage people. Ask ${O.esc(user?.username || 'a super user')} for access.</p></div>`;
+        list.innerHTML = `<div class="empty"><b>No People access</b><p>Your roles don't include People. An account with People permission can grant it — Roles pages describe who.</p></div>`;
         document.getElementById('newBtn').style.display = 'none';
         return;
       }
@@ -112,17 +119,19 @@
     function render() {
       const counts = {};
       for (const u of users) counts[u.role] = (counts[u.role] ?? 0) + 1;
-      document.getElementById('chips').innerHTML = Object.entries({ super_admin: 0, admin: 0, employee: 0 })
-        .map(([role]) => `<span class="chip">${label[role]} <b>${counts[role] ?? 0}</b></span>`).join('');
+      const keys = ['super_admin', ...(roleList ?? ['admin', 'employee']).filter((r) => r !== 'super_admin').map((r) => r.key ?? r)];
+      document.getElementById('chips').innerHTML = keys
+        .filter((k) => counts[k])
+        .map((k) => `<span class="chip">${O.esc(roleLabel(k))} <b>${counts[k]}</b></span>`).join('');
 
       if (!users.length) { list.innerHTML = '<div class="empty"><b>No accounts</b><p>Create the first one.</p></div>'; return; }
       list.innerHTML = users.map((u, idx) => `
         <li style="--d:${Math.min(idx * 45, 500)}ms;">
           <span class="avatar">${O.esc(O.initials(u.username || u.email))}</span>
           <div class="row-main">
-            <div class="row-title">${O.esc(u.username)} ${u.role === 'super_admin' ? '<span class="chip signal">super</span>' : ''}</div>
+            <div class="row-title">${O.esc(u.username)} ${u.role === 'super_admin' ? '<span class="chip signal">super</span>' : `<span class="chip">${O.esc(roleLabel(u.role))}</span>`}</div>
             <div class="row-sub">${O.esc(u.email || '')}</div>
-            <div class="row-meta">${label[u.role] ?? O.esc(u.role)}${u.last_sign_in_at ? ` · seen ${O.timeAgo(u.last_sign_in_at)}` : ' · never signed in'}</div>
+            <div class="row-meta">${O.esc(roleLabel(u.role))}${u.last_sign_in_at ? ` · seen ${O.timeAgo(u.last_sign_in_at)}` : ' · never signed in'}</div>
           </div>
           <div class="row-actions">
             <button class="icon-btn" data-edit aria-label="Edit">${O.icons.edit}</button>
@@ -158,8 +167,9 @@
           <input class="field" id="u-password" type="password" placeholder="${isNew ? 'Set a password' : '••••••••'}" autocomplete="new-password" /></div>
         <div><label class="label">Role</label>
           <select class="field" id="u-role">
-            ${['employee', 'admin', 'super_admin'].map((r) => `<option value="${r}" ${editing.role === r ? 'selected' : ''}>${label[r]}</option>`).join('')}
-          </select></div>`;
+            ${(roleList ?? [{ key: 'super_admin', name: 'Super user' }, { key: 'admin', name: 'Admin' }, { key: 'employee', name: 'Employee' }]).map((r) => `<option value="${O.esc(r.key)}" ${editing.role === r.key ? 'selected' : ''}>${O.esc(roleLabel(r.key))}</option>`).join('')}
+          </select>
+          <p class="row-meta" style="margin-top:6px;">Roles and their permissions are managed on the Roles page.</p></div>`;
       document.getElementById('m-error').hidden = true;
       O.openModal(modal);
     }

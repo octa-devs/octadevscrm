@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifySession } from '@/lib/auth';
+import { requirePerm } from '@/lib/auth';
 import { admin } from '@/lib/crm';
 
 export const dynamic = 'force-dynamic';
@@ -30,8 +30,9 @@ function partnerFrom(value: unknown, me: string): string | null | undefined {
 }
 
 export async function GET(req: NextRequest) {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.team');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const me = norm(user.email);
   const partner = partnerFrom(new URL(req.url).searchParams.get('partner'), me);
@@ -49,8 +50,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const user = await verifySession();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const user = await requirePerm('chat.team');
+
+  if (!user) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const raw = await req.json().catch(() => null);
   const payload = (raw && typeof raw === 'object' ? raw : {}) as { body?: unknown; partner?: unknown };

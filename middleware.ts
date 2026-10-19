@@ -36,11 +36,49 @@ function jwks() {
 }
 
 /**
+ * The permission floor applied before the `roles` table has been migrated.
+ * Kept in sync with BUILTIN_FALLBACK in lib/auth (duplicated here because
+ * middleware runs in the edge runtime, which cannot import app-server-only
+ * modules).
+ */
+const FALLBACK: Record<string, string[]> = {
+  admin: ['crm.read', 'crm.write', 'chat.inbox', 'chat.team', 'website.manage'],
+  employee: ['crm.read', 'crm.write', 'chat.inbox', 'chat.team'],
+};
+
+let _permT = 0;
+let _permMap: Record<string, string[]> = { ...FALLBACK };
+
+/**
+ * Roles mapping for page gating, cached briefly. Read with the visitor's own
+ * session client (anonymous reads are not possible), so a missing RLS policy
+ * simply keeps the fallback in place.
+ */
+async function supaHasPerm(supabase: ReturnType<typeof createServerClient>, role: string, perm: string): Promise<boolean> {
+  if (role === 'super_admin') return true;
+  if (Date.now() - _permT > 30_000) {
+    try {
+      const { data, error } = await supabase.from('roles').select('key, permissions');
+      if (!error && Array.isArray(data)) {
+        const map: Record<string, string[]> = { ...FALLBACK };
+        for (const r of data) map[r.key] = Array.isArray(r.permissions) ? r.permissions : [];
+        _permMap = map;
+        _permT = Date.now();
+      }
+    } catch {
+      // Table not migrated yet: the floor decides. Deploy-safe.
+    }
+  }
+  const perms = _permMap[role] ?? [];
+  return perms.includes('*') || perms.includes(perm);
+}
+
+/**
  * Missing env degrades to "not signed in", never to a 500 from this edge
  * function — that is what MIDDLEWARE_INVOCATION_FAILED looks like on a fresh
  * deploy whose vars have not been added yet.
  */
-async function readSession(request: NextRequest): Promise<{ role: string } | null> {
+async function readSession(request: NextRequest): Promise<{ role: string; supabase: ReturnType<typeof createServerClient> } | null> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     console.error('[auth] middleware: NEXT_PUBLIC_SUPABASE_URL and/or NEXT_PUBLIC_SUPABASE_ANON_KEY are not set.');
     return null;
@@ -71,14 +109,25 @@ async function readSession(request: NextRequest): Promise<{ role: string } | nul
     const { payload } = await jwtVerify(session.access_token, jwks(), {
       issuer: `${process.env.SUPABASE_URL}/auth/v1`,
     });
-    return { role: String((payload as any).app_metadata?.role ?? 'employee') };
+    return { role: String((payload as any).app_metadata?.role ?? 'employee'), supabase };
   } catch (err) {
     console.error('[auth] middleware readSession failed:', err);
     return null;
   }
 }
 
-const SUPER_ONLY = ['/app/users.html', '/app/website.html'];
+/**
+ * Page gates. The server-side APIs are authoritative regardless — this just
+ * keeps people off pages they cannot use. A session client is returned by
+ * readSession, so the roles lookup rides on the visitor's own identity.
+ */
+const PAGE_PERMS: [string, string[]][] = [
+  ['/app/users.html', ['people.manage', 'roles.manage']],
+  ['/app/roles.html', ['roles.manage']],
+  ['/app/website.html', ['website.manage']],
+  ['/app/chat.html', ['chat.inbox', 'chat.team']],
+  ['/app/data.html', ['crm.read']],
+];
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -102,7 +151,13 @@ export async function middleware(request: NextRequest) {
 
     const session = await readSession(request);
     if (!session) return to('/app/login.html');
-    if (SUPER_ONLY.includes(path) && session.role !== 'super_admin') return to('/app/dashboard.html');
+
+    for (const [page, perms] of PAGE_PERMS) {
+      if (path !== page) continue;
+      const allowed = await Promise.all(perms.map((p) => supaHasPerm(session.supabase, session.role, p)));
+      if (!allowed.some(Boolean)) return to('/app/dashboard.html');
+      break;
+    }
     return NextResponse.next();
   }
 
