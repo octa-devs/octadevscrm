@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>People — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+</head>
+<body>
+  <div class="frame">
+    <aside class="rail">
+      <div class="brand"><img src="/logo.png" alt="" /><div><b>OCTA DEVS</b><span class="eyebrow">Portal</span></div></div>
+      <nav>
+        <div class="group-label eyebrow">Overview</div>
+        <ul>
+          <li><a class="nav-item" data-page="dashboard" href="/app/dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">CRM</div>
+        <ul>
+          <li><a class="nav-item" data-page="data" data-entity="leads" href="/app/data.html?entity=leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 3 8 2-4h5"/></svg><span>Leads</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="contacts" href="/app/data.html?entity=contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Contacts</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="deals" href="/app/data.html?entity=deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.5 14.8 3.5 12 3.5S7 4.7 7 6.7s2 2.9 5 3.3 5 1.2 5 3.3-2.2 3.2-5 3.2-5-1-5-3"/></svg><span>Deals</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="tasks" href="/app/data.html?entity=tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg><span>Tasks</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Connect</div>
+        <ul>
+          <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Admin</div>
+        <ul>
+          <li><a class="nav-item" data-page="website" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+        </ul>
+      </nav>
+      <div class="foot">
+        <div class="whoami"></div>
+        <button class="btn btn-quiet signout" data-signout>Sign out</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <button class="icon-btn ttheme" data-theme-toggle aria-label="Toggle appearance"></button>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="topbar">
+        <button class="icon-btn" data-drawer aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="brand-mobile"><b>OCTA DEVS</b></span>
+        <button class="icon-btn" data-theme-toggle style="margin-left:auto;" aria-label="Toggle appearance"></button>
+      </div>
+      <main>
+        <header style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+          <div>
+            <h1 class="page-title">People</h1>
+            <p class="page-intro">Accounts that can sign in to the portal. Super users can edit anyone's email, password and role.</p>
+            <div class="header-underline"></div>
+          </div>
+          <button class="btn btn-primary" id="newBtn">New account</button>
+        </header>
+
+        <div id="chips" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;"></div>
+        <ul class="rows" id="list" style="margin-top:14px;">
+          <li class="shimmer-row shimmer"></li><li class="shimmer-row shimmer"></li><li class="shimmer-row shimmer"></li>
+        </ul>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-layer" id="modal">
+    <div class="scrim-full"></div>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><b id="m-title">Edit account</b><button class="icon-btn" data-close></button></div>
+      <div class="form-grid" id="m-fields"></div>
+      <p class="t13" id="m-error" style="color:rgb(var(--danger));margin-top:12px;" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close>Cancel</button>
+        <button class="btn btn-primary" id="m-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as O from './assets/app.js';
+
+    const user = await O.boot('users');
+
+    let users = null;
+    let editing = null;
+    const list = document.getElementById('list');
+    const modal = document.getElementById('modal');
+    const label = { super_admin: 'Super user', admin: 'Admin', employee: 'Employee' };
+
+    O.wireModal(modal);
+    modal.querySelector('.modal-head [data-close]').innerHTML = O.icons.close;
+
+    async function load() {
+      try { users = await O.api('/api/users'); }
+      catch (e) {
+        users = [];
+        O.toast(e.message, 'err');
+        list.innerHTML = `<div class="empty"><b>Super users only</b><p>Your account can't manage people. Ask ${O.esc(user?.username || 'a super user')} for access.</p></div>`;
+        document.getElementById('newBtn').style.display = 'none';
+        return;
+      }
+      render();
+    }
+
+    function render() {
+      const counts = {};
+      for (const u of users) counts[u.role] = (counts[u.role] ?? 0) + 1;
+      document.getElementById('chips').innerHTML = Object.entries({ super_admin: 0, admin: 0, employee: 0 })
+        .map(([role]) => `<span class="chip">${label[role]} <b>${counts[role] ?? 0}</b></span>`).join('');
+
+      if (!users.length) { list.innerHTML = '<div class="empty"><b>No accounts</b><p>Create the first one.</p></div>'; return; }
+      list.innerHTML = users.map((u, idx) => `
+        <li style="--d:${Math.min(idx * 45, 500)}ms;">
+          <span class="avatar">${O.esc(O.initials(u.username || u.email))}</span>
+          <div class="row-main">
+            <div class="row-title">${O.esc(u.username)} ${u.role === 'super_admin' ? '<span class="chip signal">super</span>' : ''}</div>
+            <div class="row-sub">${O.esc(u.email || '')}</div>
+            <div class="row-meta">${label[u.role] ?? O.esc(u.role)}${u.last_sign_in_at ? ` · seen ${O.timeAgo(u.last_sign_in_at)}` : ' · never signed in'}</div>
+          </div>
+          <div class="row-actions">
+            <button class="icon-btn" data-edit aria-label="Edit">${O.icons.edit}</button>
+            <button class="icon-btn danger" data-del aria-label="Delete">${O.icons.trash}</button>
+          </div>
+        </li>`).join('');
+      O.stagger(list, 'li', 45);
+      list.querySelectorAll('li').forEach((li, idx) => {
+        li.querySelector('[data-edit]').addEventListener('click', () => openEditor(users[idx]));
+        li.querySelector('[data-del]').addEventListener('click', async () => {
+          const u = users[idx];
+          if (!confirm(`Delete ${u.username} (${u.email})? They lose access immediately.`)) return;
+          li.classList.add('leaving');
+          try {
+            await O.api(`/api/users?id=${u.id}`, { method: 'DELETE' });
+            await load();
+            O.toast('Account deleted');
+          } catch (e) { O.toast(e.message, 'err'); li.classList.remove('leaving'); }
+        });
+      });
+    }
+
+    function openEditor(u) {
+      editing = u ?? { username: '', email: '', role: 'employee' };
+      const isNew = !u;
+      document.getElementById('m-title').textContent = isNew ? 'New account' : `Edit ${editing.username}`;
+      document.getElementById('m-fields').innerHTML = `
+        <div><label class="label">Username (chat handle)</label>
+          <input class="field" id="u-username" placeholder="akshansh" value="${O.esc(editing.username ?? '')}" /></div>
+        <div><label class="label">Email</label>
+          <input class="field" id="u-email" type="email" placeholder="name@octadevs.fun" value="${O.esc(editing.email ?? '')}" /></div>
+        <div><label class="label">Password ${isNew ? '' : '(leave blank to keep)'}</label>
+          <input class="field" id="u-password" type="password" placeholder="${isNew ? 'Set a password' : '••••••••'}" autocomplete="new-password" /></div>
+        <div><label class="label">Role</label>
+          <select class="field" id="u-role">
+            ${['employee', 'admin', 'super_admin'].map((r) => `<option value="${r}" ${editing.role === r ? 'selected' : ''}>${label[r]}</option>`).join('')}
+          </select></div>`;
+      document.getElementById('m-error').hidden = true;
+      O.openModal(modal);
+    }
+
+    document.getElementById('m-save').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      const email = document.getElementById('u-email').value.trim();
+      const username = document.getElementById('u-username').value.trim();
+      const password = document.getElementById('u-password').value;
+      const role = document.getElementById('u-role').value;
+      const err = document.getElementById('m-error');
+      if (!email || (!editing.id && !password)) {
+        err.textContent = 'Email and (for a new account) a password are required.';
+        err.hidden = false; return;
+      }
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        if (editing.id) {
+          await O.api('/api/users', { method: 'PUT', body: JSON.stringify({ id: editing.id, email, password, username, role }) });
+        } else {
+          await O.api('/api/users', { method: 'POST', body: JSON.stringify({ email, password, username, role }) });
+        }
+        O.closeModal(modal);
+        await load();
+        O.toast('Saved');
+      } catch (e2) { O.toast(e2.message, 'err'); }
+      btn.disabled = false; btn.textContent = 'Save';
+    });
+
+    document.getElementById('newBtn').addEventListener('click', () => openEditor(null));
+    await load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sign in — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>
+    // Paint the saved theme before first paint, so there is no flash.
+    (function () { try {
+      var t = localStorage.getItem('octa-theme');
+      var paper = t === 'paper' || (!t && window.matchMedia('(prefers-color-scheme: light)').matches);
+      if (paper) document.documentElement.classList.add('paper');
+    } catch (e) { /* private mode */ } })();
+  </script>
+</head>
+<body>
+  <div class="login-wrap spotlight" id="stage">
+    <div class="aurora"><i></i><i></i><i></i></div>
+    <div class="grid-lines"></div>
+
+    <main class="login-card" id="card" style="--mx: 50%; --my: 30%;">
+      <div class="login-mark"><img src="/logo.png" alt="OCTA DEVS" /></div>
+      <h1 style="font-size:22px;font-weight:600;">Welcome back</h1>
+      <p class="page-intro" style="margin-top:6px;">The team portal — CRM, chat and the website admin.</p>
+
+      <form class="ll" id="form" novalidate>
+        <div style="--d: 60ms;">
+          <label class="label" for="email">Email</label>
+          <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@octadevs.fun" required />
+        </div>
+        <div style="--d: 120ms;">
+          <label class="label" for="password">Password</label>
+          <div class="pw-row">
+            <input class="field" id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required style="padding-right: 44px;" />
+            <button type="button" class="icon-btn" id="togglePw" aria-label="Show password"></button>
+          </div>
+        </div>
+        <p class="err" id="err" hidden></p>
+        <button class="btn btn-primary" id="submit" type="submit" style="--d: 180ms; width: 100%; margin-top: 4px;">Sign in</button>
+      </form>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px;">
+        <span class="eyebrow">Octa · internal</span>
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { icons, api } from './assets/app.js';
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from './assets/config.js';
+
+    const card = document.getElementById('card');
+    const errEl = document.getElementById('err');
+    const btn = document.getElementById('submit');
+    const pw = document.getElementById('password');
+    document.getElementById('togglePw').innerHTML = icons.eye;
+
+    // Card spotlight follows the cursor.
+    stage.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+
+    // Already signed in? Straight to the dashboard.
+    try {
+      const { user } = await api('/api/session');
+      if (user) location.replace('/app/dashboard.html');
+    } catch { /* fresh visitor */ }
+
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const show = pw.type === 'password';
+      pw.type = show ? 'text' : 'password';
+      document.getElementById('togglePw').innerHTML = show ? icons.close : icons.eye;
+    });
+
+    let supabase = null;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errEl.hidden = true;
+      const email = document.getElementById('email').value.trim();
+      const password = pw.value;
+      if (!email || !password) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+      try {
+        if (!supabase) {
+          const mod = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+          supabase = mod.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+
+        // Hand the session to this origin: /api/auth/session writes the
+        // HttpOnly cookies every API route and the middleware read.
+        const res = await fetch('/api/auth/session', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            access_token: data.session.access_token,
+            refresh_token: data.session.refresh_token,
+          }),
+        });
+        if (!res.ok) {
+          const { error: e2 } = await res.json().catch(() => ({ error: 'Could not establish a session.' }));
+          throw e2 ?? new Error('Could not establish a session.');
+        }
+        btn.textContent = 'Welcome';
+        location.replace('/app/dashboard.html');
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Sign in';
+        errEl.textContent = err?.message || 'Sign-in failed.';
+        errEl.hidden = false;
+        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+      }
+    });
+  </script>
+</body>
+</html>

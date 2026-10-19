@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>CRM — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+</head>
+<body>
+  <div class="frame">
+    <aside class="rail">
+      <div class="brand"><img src="/logo.png" alt="" /><div><b>OCTA DEVS</b><span class="eyebrow">Portal</span></div></div>
+      <nav>
+        <div class="group-label eyebrow">Overview</div>
+        <ul>
+          <li><a class="nav-item" data-page="dashboard" href="/app/dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">CRM</div>
+        <ul>
+          <li><a class="nav-item" data-page="data" data-entity="leads" href="/app/data.html?entity=leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 3 8 2-4h5"/></svg><span>Leads</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="contacts" href="/app/data.html?entity=contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Contacts</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="deals" href="/app/data.html?entity=deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.5 14.8 3.5 12 3.5S7 4.7 7 6.7s2 2.9 5 3.3 5 1.2 5 3.3-2.2 3.2-5 3.2-5-1-5-3"/></svg><span>Deals</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="tasks" href="/app/data.html?entity=tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg><span>Tasks</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Connect</div>
+        <ul>
+          <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Admin</div>
+        <ul>
+          <li><a class="nav-item" data-page="website" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+        </ul>
+      </nav>
+      <div class="foot">
+        <div class="whoami"></div>
+        <button class="btn btn-quiet signout" data-signout>Sign out</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <button class="icon-btn ttheme" data-theme-toggle aria-label="Toggle appearance"></button>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="topbar">
+        <button class="icon-btn" data-drawer aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="brand-mobile"><b>OCTA DEVS</b></span>
+        <button class="icon-btn" data-theme-toggle style="margin-left:auto;" aria-label="Toggle appearance"></button>
+      </div>
+      <main>
+        <header style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+          <div>
+            <h1 class="page-title" id="title">Leads</h1>
+            <p class="page-intro" id="intro"></p>
+            <div class="header-underline"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input class="field" id="q" placeholder="Search" style="width:180px;" aria-label="Search" />
+            <button class="btn btn-primary" id="newBtn">New</button>
+          </div>
+        </header>
+
+        <section style="margin-top:22px;">
+          <div id="chips" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+          <ul class="rows" id="list" style="margin-top:14px;">
+            <li class="shimmer-row shimmer"></li><li class="shimmer-row shimmer"></li><li class="shimmer-row shimmer"></li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- editor -->
+  <div class="modal-layer" id="modal">
+    <div class="scrim-full"></div>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><b id="m-title">Edit</b><button class="icon-btn" data-close></button></div>
+      <div class="form-grid" id="m-fields"></div>
+      <p class="t13" id="m-error" style="color:rgb(var(--danger));margin-top:12px;" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close>Cancel</button>
+        <button class="btn btn-primary" id="m-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as O from './assets/app.js';
+
+    const ENTITIES = {
+      leads: {
+        title: 'Leads',
+        intro: 'Inbound interest from octadevs.fun and referrals. Move a lead to Won once the deal page is signed.',
+        fields: [
+          { key: 'name', label: 'Name', placeholder: 'Priya Nair' },
+          { key: 'company', label: 'Company', placeholder: 'Northwind Studio' },
+          { key: 'email', label: 'Email', type: 'email', placeholder: 'priya@northwind.co' },
+          { key: 'phone', label: 'Phone', placeholder: '+91 98765 43210' },
+          { key: 'status', label: 'Status', type: 'select', options: ['New', 'Contacted', 'Qualified', 'Won', 'Lost'] },
+          { key: 'source', label: 'Source', type: 'select', options: ['Website', 'Referral', 'Social', 'Outbound', 'Event'] },
+          { key: 'notes', label: 'Notes', type: 'textarea', full: true, placeholder: 'What they asked for, budget, timeline.' },
+        ],
+        chips: [{ key: 'status', map: { Won: 'ok', Lost: 'danger', Qualified: 'signal' } }],
+        primary: (i) => i.name || 'Untitled lead',
+        secondary: (i) => [i.company, i.email].filter(Boolean).join(' · '),
+      },
+      contacts: {
+        title: 'Contacts',
+        intro: 'Everyone the team has spoken with, including people attached to existing deals.',
+        fields: [
+          { key: 'name', label: 'Name', placeholder: 'Rahul Verma' },
+          { key: 'role', label: 'Role', placeholder: 'Product Lead' },
+          { key: 'company', label: 'Company', placeholder: 'Lumen Labs' },
+          { key: 'email', label: 'Email', type: 'email', placeholder: 'rahul@lumenlabs.io' },
+          { key: 'phone', label: 'Phone', placeholder: '+91 90000 11111' },
+          { key: 'notes', label: 'Notes', type: 'textarea', full: true, placeholder: 'How you know them, preferred channel.' },
+        ],
+        chips: [],
+        primary: (i) => i.name || 'Untitled contact',
+        secondary: (i) => [[i.role, i.company].filter(Boolean).join(', '), i.email].filter(Boolean).join(' · '),
+      },
+      deals: {
+        title: 'Deals',
+        intro: 'Work in flight. Values are what the client agreed to, before taxes and retainers.',
+        fields: [
+          { key: 'title', label: 'Deal', placeholder: 'Lumen Labs — mobile app' },
+          { key: 'value', label: 'Value', placeholder: 'INR 2,40,000' },
+          { key: 'stage', label: 'Stage', type: 'select', options: ['Prospecting', 'Qualified', 'Proposal', 'Negotiation', 'Won', 'Lost'] },
+          { key: 'contact', label: 'Contact', placeholder: 'Rahul Verma' },
+          { key: 'close_date', label: 'Close date', type: 'date' },
+          { key: 'notes', label: 'Notes', type: 'textarea', full: true, placeholder: 'Scope, objections, next step.' },
+        ],
+        chips: [{ key: 'stage', map: { Negotiation: 'signal', Won: 'ok', Lost: 'danger' } }],
+        primary: (i) => i.title || 'Untitled deal',
+        secondary: (i) => [i.contact, i.value].filter(Boolean).join(' · '),
+      },
+      tasks: {
+        title: 'Tasks',
+        intro: "Short-term work for the team. Anything longer than a week belongs in a deal.",
+        fields: [
+          { key: 'title', label: 'Task', placeholder: 'Send revised proposal' },
+          { key: 'assignee', label: 'Assignee', placeholder: 'Akshansh' },
+          { key: 'due_date', label: 'Due date', type: 'date' },
+          { key: 'priority', label: 'Priority', type: 'select', options: ['Low', 'Medium', 'High'] },
+          { key: 'status', label: 'Status', type: 'select', options: ['To do', 'In progress', 'Done'] },
+          { key: 'notes', label: 'Notes', type: 'textarea', full: true, placeholder: 'What done looks like.' },
+        ],
+        chips: [
+          { key: 'priority', map: { High: 'signal' } },
+          { key: 'status', map: { Done: 'ok', 'In progress': 'signal' } },
+        ],
+        primary: (i) => i.title || 'Untitled task',
+        secondary: (i) => [i.assignee, i.due_date ? `due ${i.due_date}` : ''].filter(Boolean).join(' · '),
+      },
+    };
+
+    const entity = new URLSearchParams(location.search).get('entity') ?? 'leads';
+    const cfg = ENTITIES[entity] ?? ENTITIES.leads;
+    if (!ENTITIES[entity]) location.replace('/app/data.html?entity=leads');
+
+    const user = await O.boot('data');
+    // Highlight the right rail item (entity-aware).
+    document.querySelectorAll('.nav-item[data-page="data"]').forEach((el) =>
+      el.classList.toggle('active', el.dataset.entity === entity));
+
+    let items = null;
+    const list = document.getElementById('list');
+    const chipsEl = document.getElementById('chips');
+    const q = document.getElementById('q');
+    const modal = document.getElementById('modal');
+    let editing = null;
+
+    document.getElementById('title').textContent = cfg.title;
+    document.getElementById('intro').textContent = cfg.intro;
+    document.getElementById('newBtn').textContent = `New ${cfg.title.replace(/s$/, '').toLowerCase()}`;
+    O.wireModal(modal);
+    modal.querySelector('.modal-head [data-close]').innerHTML = O.icons.close;
+
+    const chipFor = (item) => cfg.chips
+      .filter((c) => item[c.key])
+      .map((c) => `<span class="chip ${c.map[item[c.key]] ?? ''}">${O.esc(item[c.key])}</span>`)
+      .join('');
+
+    function renderChips() {
+      if (!items) return;
+      const counts = {};
+      for (const i of items) cfg.chips.forEach((c) => { if (i[c.key]) counts[i[c.key]] = (counts[i[c.key]] ?? 0) + 1; });
+      chipsEl.innerHTML = Object.entries(counts).sort().map(([k, n]) => `<span class="chip">${O.esc(k)} <b>${n}</b></span>`).join('');
+    }
+
+    function render() {
+      if (!items) return;
+      const needle = q.value.trim().toLowerCase();
+      const rows = needle
+        ? items.filter((i) => JSON.stringify(i).toLowerCase().includes(needle))
+        : items;
+      if (!rows.length) {
+        list.innerHTML = `<div class="empty"><b>No ${needle ? 'matches' : 'records yet'}</b><p>${needle ? 'Nothing matches that search.' : `${O.esc(cfg.title.replace(/s$/, ''))} you add show up here for the whole team.`}</p></div>`;
+      } else {
+        list.style.padding = '0';
+        list.innerHTML = rows.map((i, idx) => `
+          <li style="--d: ${Math.min(idx * 45, 520)}ms;">
+            <span class="avatar">${O.esc(O.initials(cfg.primary(i)))}</span>
+            <div class="row-main">
+              <div class="row-title">${O.esc(cfg.primary(i))}${chipFor(i)}</div>
+              <div class="row-sub">${O.esc(cfg.secondary(i))}</div>
+              <div class="row-meta">Added ${O.timeAgo(i.created_at)}</div>
+            </div>
+            <div class="row-actions">
+              <button class="icon-btn" data-edit="${i.id}" aria-label="Edit">${O.icons.edit}</button>
+              <button class="icon-btn danger" data-del="${i.id}" aria-label="Delete">${O.icons.trash}</button>
+            </div>
+          </li>`).join('');
+      }
+      renderChips();
+      O.stagger(list, 'li', 45);
+      list.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => openEditor(items.find((i) => String(i.id) === b.dataset.edit))));
+      list.querySelectorAll('[data-del]').forEach((b) => b.addEventListener('click', async () => {
+        const item = items.find((i) => String(i.id) === b.dataset.del);
+        if (!confirm(`Delete ${cfg.primary(item)}?`)) return;
+        try {
+          await O.api(`/api/crm/${entity}?id=${item.id}`, { method: 'DELETE' });
+          b.closest('li').classList.add('leaving');
+          setTimeout(() => { items = items.filter((i) => String(i.id) !== item.id); render(); }, 200);
+          O.toast('Deleted');
+        } catch (e) { O.toast(e.message, 'err'); }
+      }));
+    }
+
+    async function load() {
+      try { items = await O.api(`/api/crm/${entity}`); } catch (e) { O.toast(e.message, 'err'); items = []; }
+      render();
+    }
+
+    function formFor(item) {
+      const grid = document.getElementById('m-fields');
+      grid.innerHTML = cfg.fields.map((f) => `
+        <div class="${f.full || f.type === 'textarea' ? 'full' : ''}">
+          <label class="label" for="f-${f.key}">${f.label}</label>
+          ${f.type === 'textarea'
+            ? `<textarea class="field" id="f-${f.key}" placeholder="${f.placeholder ?? ''}">${O.esc(item[f.key] ?? '')}</textarea>`
+            : f.type === 'select'
+              ? `<select class="field" id="f-${f.key}">${(f.options ?? []).map((o) => `<option ${item[f.key] === o ? 'selected' : ''}>${O.esc(o)}</option>`).join('')}</select>`
+              : `<input class="field" type="${f.type ?? 'text'}" id="f-${f.key}" placeholder="${f.placeholder ?? ''}" value="${O.esc(item[f.key] ?? '')}">`}
+        </div>`).join('');
+      grid.querySelectorAll('input, select, textarea').forEach((el) => {
+        el.addEventListener('input', () => { item[el.id.replace('f-', '')] = el.value; });
+      });
+    }
+
+    function openEditor(item) {
+      editing = item ?? null;
+      document.getElementById('m-title').textContent = item ? `Edit ${cfg.title.replace(/s$/, '').toLowerCase()}` : `New ${cfg.title.replace(/s$/, '').toLowerCase()}`;
+      const seed = item ? { ...item } : { ...Object.fromEntries(cfg.fields.map((f) => [f.key, f.type === 'select' ? (f.options?.[0] ?? '') : ''])) };
+      formFor(seed);
+      editing = seed;
+      document.getElementById('m-error').hidden = true;
+      document.getElementById('m-save').disabled = false;
+      O.openModal(modal);
+    }
+
+    document.getElementById('m-save').addEventListener('click', async () => {
+      const btn = document.getElementById('m-save');
+      const isError = cfg.fields.filter((f) => f.label && !String(editing[f.key] ?? '').trim()).map((f) => f.label);
+      if (isError.length) {
+        const err = document.getElementById('m-error');
+        err.textContent = `Fill in: ${isError.join(', ')}.`;
+        err.hidden = false;
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        if (editing.id) {
+          const { id, created_at, ...rest } = editing;
+          const updated = await O.api(`/api/crm/${entity}`, { method: 'PUT', body: JSON.stringify({ id, ...rest }) });
+          items = items.map((i) => (String(i.id) === String(id) ? updated : i));
+        } else {
+          const created = await O.api(`/api/crm/${entity}`, { method: 'POST', body: JSON.stringify(editing) });
+          items = [created, ...items];
+        }
+        O.closeModal(modal);
+        O.toast('Saved');
+        render();
+      } catch (e) { O.toast(e.message, 'err'); }
+      btn.disabled = false; btn.textContent = 'Save';
+    });
+
+    q.addEventListener('input', render);
+    document.getElementById('newBtn').addEventListener('click', () => openEditor(null));
+    O.reveal(document);
+    await load();
+  </script>
+</body>
+</html>

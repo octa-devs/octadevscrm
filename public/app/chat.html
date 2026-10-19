@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Chat — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+</head>
+<body>
+  <div class="frame">
+    <aside class="rail">
+      <div class="brand"><img src="/logo.png" alt="" /><div><b>OCTA DEVS</b><span class="eyebrow">Portal</span></div></div>
+      <nav>
+        <div class="group-label eyebrow">Overview</div>
+        <ul>
+          <li><a class="nav-item" data-page="dashboard" href="/app/dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">CRM</div>
+        <ul>
+          <li><a class="nav-item" data-page="data" data-entity="leads" href="/app/data.html?entity=leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 3 8 2-4h5"/></svg><span>Leads</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="contacts" href="/app/data.html?entity=contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Contacts</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="deals" href="/app/data.html?entity=deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.5 14.8 3.5 12 3.5S7 4.7 7 6.7s2 2.9 5 3.3 5 1.2 5 3.3-2.2 3.2-5 3.2-5-1-5-3"/></svg><span>Deals</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="tasks" href="/app/data.html?entity=tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg><span>Tasks</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Connect</div>
+        <ul>
+          <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Admin</div>
+        <ul>
+          <li><a class="nav-item" data-page="website" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+        </ul>
+      </nav>
+      <div class="foot">
+        <div class="whoami"></div>
+        <button class="btn btn-quiet signout" data-signout>Sign out</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <button class="icon-btn ttheme" data-theme-toggle aria-label="Toggle appearance"></button>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="topbar">
+        <button class="icon-btn" data-drawer aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="brand-mobile"><b>OCTA DEVS</b></span>
+        <button class="icon-btn" data-theme-toggle style="margin-left:auto;" aria-label="Toggle appearance"></button>
+      </div>
+      <main>
+        <header>
+          <h1 class="page-title">Chat</h1>
+          <p class="page-intro">Visitors on octadevs.fun come in on the left. The team talks to each other by username on the right.</p>
+          <div class="header-underline"></div>
+        </header>
+
+        <div class="tabs" style="margin-top:20px;">
+          <button class="tab active" data-tab="inbox">Inbox</button>
+          <button class="tab" data-tab="team">Team</button>
+        </div>
+
+        <!-- ===== visitor inbox ===== -->
+        <section id="pane-inbox" style="margin-top:20px;">
+          <div class="chat-grid">
+            <div class="chat-pane">
+              <div class="chat-head">
+                <span class="eyebrow">Visitors</span>
+                <span class="dot live" style="margin-left:auto;" ></span>
+              </div>
+              <div class="convo-list" id="convoList">
+                <p class="t13 dim" style="padding:16px;">Loading conversations…</p>
+              </div>
+            </div>
+            <div class="chat-pane" id="threadPane">
+              <div class="chat-head" id="threadHead">
+                <span class="who"><b class="t13" id="threadName">Pick a conversation</b>
+                <span class="row-meta" id="threadWho"></span></span>
+                <button class="btn btn-ghost" id="threadStatus" style="padding:6px 12px; font-size:12px; display:none;"></button>
+              </div>
+              <div class="chat-log" id="threadLog"><span class="t13 dim" style="margin:auto;">New visitor conversations appear the moment they write in.</span></div>
+              <form class="composer" id="composer">
+                <textarea class="field" id="composerInput" rows="1" placeholder="Reply…"></textarea>
+                <button class="btn btn-primary" type="submit" disabled id="sendBtn"></button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== team rooms ===== -->
+        <section id="pane-team" style="margin-top:20px; display:none;">
+          <div class="chat-grid">
+            <div class="chat-pane">
+              <div class="chat-head"><span class="eyebrow">Rooms</span></div>
+              <div class="rooms convo-list" id="rooms">
+                <div class="room-head">
+                  <p class="eyebrow">Start a chat</p>
+                </div>
+                <p class="t13 dim" style="padding:12px 16px;">Loading people…</p>
+              </div>
+            </div>
+            <div class="chat-pane">
+              <div class="chat-head">
+                <span class="who"><b class="t13" id="roomName"># general</b>
+                <span class="row-meta" id="roomWho"></span></span>
+              </div>
+              <div class="chat-log" id="roomLog"><span class="t13 dim" style="margin:auto;">Every teammate can read # general. Pick a person to start a DM.</span></div>
+              <form class="composer" id="roomComposer">
+                <textarea class="field" id="roomInput" rows="1" placeholder="Message…"></textarea>
+                <button class="btn btn-primary" type="submit" disabled id="roomSend"></button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as O from './assets/app.js';
+
+    const user = await O.boot('chat');
+    document.getElementById('composer').querySelector('[type=submit]').innerHTML = O.icons.send;
+    document.getElementById('roomComposer').querySelector('[type=submit]').innerHTML = O.icons.send;
+
+    const W = 'visitor';
+    let tab = 'inbox';
+
+    /* ---------------- tabs ---------------- */
+    const panes = { inbox: document.getElementById('pane-inbox'), team: document.getElementById('pane-team') };
+    document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === t));
+      tab = t.dataset.tab;
+      Object.entries(panes).forEach(([k, el]) => { el.style.display = k === tab ? '' : 'none'; });
+      if (tab === 'team') { loadMembers(); pollTeam(); } else pollInbox();
+    }));
+    Object.entries(panes).forEach(([k, el]) => { if (k !== 'inbox') el.style.display = 'none'; });
+
+    /* ================ INBOX ================ */
+    let convos = null;
+    let activeId = null;
+    let messages = null;      // messages of the active thread
+    let seenMsgs = new Set();
+
+    const convoList = document.getElementById('convoList');
+    const threadLog = document.getElementById('threadLog');
+    const threadName = document.getElementById('threadName');
+    const threadWho = document.getElementById('threadWho');
+    const threadStatus = document.getElementById('threadStatus');
+    const composer = document.getElementById('composer');
+    const input = document.getElementById('composerInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    function renderConvos() {
+      if (!convos) return;
+      if (!convos.length) {
+        convoList.innerHTML = '<p class="t13 dim" style="padding:16px;">No visitors have written yet. When someone opens the chat on octadevs.fun, they land here.</p>';
+        return;
+      }
+      convoList.innerHTML = convos.map((c, idx) => {
+        const preview = c.last_message ? `${c.last_message.sender === 'team' ? 'You: ' : ''}${c.last_message.body}` : `First contact on ${c.last_page || 'the site'}`;
+        return `
+        <button data-convo="${c.id}" style="--d:${idx * 40}ms; ${String(c.id) === String(activeId) ? 'background:rgb(var(--panel));' : ''}">
+          <span class="msg-side">${O.esc(O.initials(c.visitor_name || c.visitor_email))}</span>
+          <span class="who">
+            <b>${O.esc(c.visitor_name || 'Anonymous')} ${c.status === 'closed' ? '<span class="chip">closed</span>' : ''}</b>
+            <span>${O.esc(preview).slice(0, 90)}</span>
+          </span>
+          <span style="display:grid;justify-items:end;gap:6px;">
+            <span class="when">${O.esc(O.timeAgo(c.last_message_at || c.created_at))}</span>
+            ${c.unread_team > 0 ? `<span class="unread">${c.unread_team}</span>` : ''}
+          </span>
+        </button>`;
+      }).join('');
+      O.stagger(convoList, '[data-convo]', 35);
+      convoList.querySelectorAll('[data-convo]').forEach((b) => b.addEventListener('click', () => openConvo(b.dataset.convo)));
+    }
+
+    function renderThread(fresh = false) {
+      const convo = convos?.find((c) => String(c.id) === String(activeId));
+      if (!convo) return;
+      threadName.textContent = convo.visitor_name || 'Anonymous visitor';
+      threadWho.textContent = [convo.visitor_email, convo.last_page && `last page: ${convo.last_page}`.replace('last page: ', 'on '), convo.status].filter(Boolean).join(' · ');
+      threadStatus.textContent = convo.status === 'open' ? 'Mark closed' : 'Reopen';
+      threadStatus.style.display = '';
+      threadStatus.onclick = async () => {
+        const next = convo.status === 'open' ? 'closed' : 'open';
+        try {
+          const res = await O.api(`/api/chat/conversations/${activeId}`, { method: 'POST', body: JSON.stringify({ status: next }) });
+          convos = convos.map((c) => (String(c.id) === String(activeId) ? res.conversation : c));
+          renderConvos(); renderThread();
+          O.refreshBadge();
+          O.toast(next === 'closed' ? 'Conversation closed' : 'Reopened');
+        } catch (e) { O.toast(e.message, 'err'); }
+      };
+
+      if (!messages) { threadLog.innerHTML = '<span class="t13 dim" style="margin:auto;">Loading…</span>'; return; }
+      // Only animate messages we have not drawn before.
+      threadLog.innerHTML = messages.map((m) => {
+        const mine = m.sender !== 'visitor';
+        return `
+        <div class="msg ${mine ? 'mine' : ''}" ${!seenMsgs.has(m.id) ? 'style="animation-play-state:running;"' : 'style="animation:none;"'}>
+          <span class="msg-side">${mine ? 'OC' : O.esc(O.initials(convo.visitor_name || convo.visitor_email))}</span>
+          <div class="msg-body">
+            <div class="meta">${mine ? 'Team' : O.esc(convo.visitor_name || 'Visitor')} · ${O.esc(O.stamp(m.created_at))}</div>
+            <div class="bubble">${O.esc(m.body)}</div>
+          </div>
+        </div>`;
+      }).join('');
+      messages.forEach((m) => seenMsgs.add(m.id));
+      threadLog.scrollTop = threadLog.scrollHeight;
+    }
+
+    async function openConvo(id) {
+      activeId = id;
+      messages = null;
+      renderConvos(); renderThread();
+      try {
+        const res = await O.api(`/api/chat/conversations/${id}`);
+        messages = res.messages;
+        const idx = convos.findIndex((c) => String(c.id) === String(id));
+        if (idx >= 0) convos[idx] = { ...convos[idx], ...res.conversation };
+        seenMsgs = new Set(); // fresh open — animate the whole thread once
+        renderConvos(); renderThread();
+        O.refreshBadge();
+      } catch (e) { O.toast(e.message, 'err'); }
+    }
+
+    async function pollInbox() {
+      if (tab !== 'inbox') return;
+      try {
+        const res = await O.api('/api/chat/conversations');
+        const prevUnread = new Set((convos ?? []).filter((c) => c.unread_team > 0).map((c) => c.id));
+        convos = res.conversations ?? [];
+        const hadActive = activeId && convos.some((c) => String(c.id) === String(activeId));
+        if (!hadActive) {
+          const firstUnread = convos.find((c) => c.unread_team > 0);
+          if (firstUnread) { activeId = firstUnread.id; renderConvos(); openConvo(firstUnread.id); }
+        }
+        renderConvos();
+        if (activeId) {
+          const convo = convos.find((c) => String(c.id) === String(activeId));
+          if (convo && convo.unread_team === 0 && messages === null) { /* opening in flight */ }
+          // Refresh an open thread when the visitor writes more.
+          if (convo && convo.unread_team > 0 && messages) openConvo(activeId);
+          else if (convo) renderThread();
+        }
+      } catch { /* ignore transient errors between polls */ }
+    }
+
+    composer.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = input.value.trim();
+      if (!body || !activeId) return;
+      input.value = ''; autosize(input, 1);
+      sendBtn.disabled = true;
+
+      // Optimistic bubble, then replaced by the saved row.
+      const tempId = `temp-${Date.now()}`;
+      threadLog.insertAdjacentHTML('beforeend', `
+        <div class="msg mine" data-temp="${tempId}">
+          <span class="msg-side">OC</span>
+          <div class="msg-body pending">
+            <div class="meta">Team</div>
+            <div class="bubble">${O.esc(body)}</div>
+          </div>
+        </div>`);
+      threadLog.scrollTop = threadLog.scrollHeight;
+      try {
+        const res = await O.api(`/api/chat/conversations/${activeId}`, { method: 'POST', body: JSON.stringify({ body }) });
+        threadLog.querySelector(`[data-temp="${tempId}"]`)?.remove();
+        messages = [...(messages ?? []), res.message];
+        seenMsgs.add(res.message.id);
+        const idx = convos.findIndex((c) => String(c.id) === String(activeId));
+        if (idx >= 0) {
+          convos[idx].last_message = res.message;
+          convos[idx].last_message_at = res.message.created_at;
+          convos[idx].unread_visitor = 1; // just set server-side
+        }
+        renderConvos(); renderThread();
+      } catch (err) {
+        threadLog.querySelector(`[data-temp="${tempId}"]`)?.remove();
+        input.value = body;
+        O.toast(err.message, 'err');
+      }
+      sendBtn.disabled = false;
+    });
+
+    function autosize(el, minRows = 1) {
+      el.style.height = 'auto';
+      el.style.height = `${Math.max(minRows * 21, Math.min(el.scrollHeight, 132))}px`;
+    }
+    input.addEventListener('input', () => { autosize(input); sendBtn.disabled = !input.value.trim(); });
+
+    /* ================ TEAM ================ */
+    const roomsEl = document.getElementById('rooms');
+    const roomLog = document.getElementById('roomLog');
+    const roomComposer = document.getElementById('roomComposer');
+    const roomInput = document.getElementById('roomInput');
+    const roomName = document.getElementById('roomName');
+    const roomWho = document.getElementById('roomWho');
+    let members = null;
+    let partner = null;         // null = # general
+    let roomMsgs = null;
+    let roomSeen = new Set();
+
+    async function loadMembers() {
+      if (members) return;
+      try {
+        members = (await O.api('/api/chat/team/members')).members ?? [];
+        renderRooms();
+      } catch (e) { O.toast(e.message, 'err'); roomsEl.innerHTML = '<p class="t13 dim" style="padding:16px;">Could not load people.</p>'; }
+    }
+
+    function renderRooms() {
+      if (!members) return;
+      const rows = [
+        `<button data-partner="" style="width:100%;${partner === null ? 'background:rgb(var(--panel));' : ''}">
+           <span class="dot ${partner === null ? 'live' : ''}"></span><span style="flex:1;"><b style="font-weight:500;"># general</b><br><span class="row-meta" style="margin-top:2px;">everyone</span></span>
+         </button>`,
+        ...members.filter((m) => !m.is_me).map((m) => `
+          <button data-partner="${O.esc(m.email)}" style="width:100%;${partner === m.email ? 'background:rgb(var(--panel));' : ''}">
+            <span class="avatar sm" style="clip-path:none; border-radius:999px;">${O.esc(O.initials(m.username))}</span>
+            <span style="flex:1;"><b style="font-weight:500;">${O.esc(m.username)}</b><br><span class="row-meta" style="margin-top:2px;">${O.esc(m.role)}</span></span>
+          </button>`),
+      ];
+      roomsEl.innerHTML = rows.join('');
+      roomsEl.querySelectorAll('[data-partner]').forEach((b) => b.addEventListener('click', () => openRoom(b.dataset.partner || null)));
+    }
+
+    function renderRoomMsgs() {
+      const title = partner ? members.find((m) => m.email === partner)?.username : 'general';
+      roomName.textContent = partner ? `@${title}` : '# general';
+      roomWho.textContent = partner ? `private DM` : 'every teammate';
+      if (!roomMsgs) { roomLog.innerHTML = '<span class="t13 dim" style="margin:auto;">Loading…</span>'; return; }
+      if (!roomMsgs.length) {
+        roomLog.innerHTML = `<span class="t13 dim" style="margin:auto;">${partner ? 'No messages yet — say hi.' : 'Room is quiet.'}</span>`;
+        return;
+      }
+      roomLog.innerHTML = roomMsgs.map((m) => {
+        const mine = String(m.author_email).toLowerCase() === String(user.email).toLowerCase();
+        return `
+        <div class="msg ${mine ? 'mine' : ''}" style="${roomSeen.has(m.id) ? 'animation: none;' : ''}">
+          <span class="msg-side" title="${O.esc(m.author_email)}">${O.esc(O.initials(m.author_username || m.author_email))}</span>
+          <div class="msg-body">
+            <div class="meta">${mine ? 'You' : O.esc(m.author_username || m.author_email)} · ${O.esc(O.stamp(m.created_at))}</div>
+            <div class="bubble">${O.esc(m.body)}</div>
+          </div>
+        </div>`;
+      }).join('');
+      roomMsgs.forEach((m) => roomSeen.add(m.id));
+      roomLog.scrollTop = roomLog.scrollHeight;
+    }
+
+    async function openRoom(p) {
+      partner = p;
+      roomMsgs = null;
+      roomSeen = new Set();
+      renderRooms(); renderRoomMsgs();
+      await pollTeam(true);
+    }
+
+    async function pollTeam(silent = false) {
+      if (tab !== 'team') return;
+      try {
+        const qs = partner ? `?partner=${encodeURIComponent(partner)}` : '';
+        const res = await O.api(`/api/chat/team${qs}`);
+        roomMsgs = res.messages ?? [];
+        renderRoomMsgs();
+      } catch (e) { if (!silent) O.toast(e.message, 'err'); }
+    }
+
+    roomComposer.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = roomInput.value.trim();
+      if (!body) return;
+      roomInput.value = ''; autosize(roomInput, 1);
+      document.getElementById('roomSend').disabled = true;
+
+      const tempId = `temp-${Date.now()}`;
+      roomLog.insertAdjacentHTML('beforeend', `
+        <div class="msg mine" data-temp="${tempId}">
+          <span class="msg-side">${O.esc(O.initials(user?.username || user?.email))}</span>
+          <div class="msg-body pending">
+            <div class="meta">You</div>
+            <div class="bubble">${O.esc(body)}</div>
+          </div>
+        </div>`);
+      roomLog.scrollTop = roomLog.scrollHeight;
+      try {
+        const res = await O.api('/api/chat/team', { method: 'POST', body: JSON.stringify({ body, partner }) });
+        roomLog.querySelector(`[data-temp="${tempId}"]`)?.remove();
+        roomMsgs = [...(roomMsgs ?? []), res.message];
+        roomSeen.add(res.message.id);
+        renderRoomMsgs();
+      } catch (err) {
+        roomLog.querySelector(`[data-temp="${tempId}"]`)?.remove();
+        roomInput.value = body;
+        O.toast(err.message, 'err');
+      }
+      document.getElementById('roomSend').disabled = false;
+    });
+    roomInput.addEventListener('input', () => { autosize(roomInput); document.getElementById('roomSend').disabled = !roomInput.value.trim(); });
+
+    /* ---------------- polling loops ---------------- */
+    setInterval(pollInbox, 3500);
+    setInterval(() => pollTeam(true), 3500);
+    await pollInbox();
+  </script>
+</body>
+</html>

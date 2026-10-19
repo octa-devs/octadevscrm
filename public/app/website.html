@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Website — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+</head>
+<body>
+  <div class="frame">
+    <aside class="rail">
+      <div class="brand"><img src="/logo.png" alt="" /><div><b>OCTA DEVS</b><span class="eyebrow">Portal</span></div></div>
+      <nav>
+        <div class="group-label eyebrow">Overview</div>
+        <ul>
+          <li><a class="nav-item" data-page="dashboard" href="/app/dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">CRM</div>
+        <ul>
+          <li><a class="nav-item" data-page="data" data-entity="leads" href="/app/data.html?entity=leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 3 8 2-4h5"/></svg><span>Leads</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="contacts" href="/app/data.html?entity=contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Contacts</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="deals" href="/app/data.html?entity=deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.5 14.8 3.5 12 3.5S7 4.7 7 6.7s2 2.9 5 3.3 5 1.2 5 3.3-2.2 3.2-5 3.2-5-1-5-3"/></svg><span>Deals</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="tasks" href="/app/data.html?entity=tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg><span>Tasks</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Connect</div>
+        <ul>
+          <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Admin</div>
+        <ul>
+          <li><a class="nav-item" data-page="website" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+        </ul>
+      </nav>
+      <div class="foot">
+        <div class="whoami"></div>
+        <button class="btn btn-quiet signout" data-signout>Sign out</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <button class="icon-btn ttheme" data-theme-toggle aria-label="Toggle appearance"></button>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="topbar">
+        <button class="icon-btn" data-drawer aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="brand-mobile"><b>OCTA DEVS</b></span>
+        <button class="icon-btn" data-theme-toggle style="margin-left:auto;" aria-label="Toggle appearance"></button>
+      </div>
+      <main>
+        <header>
+          <h1 class="page-title">Website</h1>
+          <p class="page-intro">Content published on octadevs.fun. Changes appear on the public site as soon as you save them.</p>
+          <div class="header-underline"></div>
+        </header>
+
+        <div class="tabs" style="margin-top:20px;" id="tabs">
+          <button class="tab active" data-tab="projects">Projects</button>
+          <button class="tab" data-tab="team">Team</button>
+          <button class="tab" data-tab="launch">Launch banner</button>
+        </div>
+
+        <section id="section-projects" style="margin-top:20px;"></section>
+        <section id="section-team" style="margin-top:20px; display:none;"></section>
+        <section id="section-launch" style="margin-top:20px; display:none;"></section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-layer" id="modal">
+    <div class="scrim-full"></div>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><b id="m-title">Edit</b><button class="icon-btn" data-close></button></div>
+      <div class="form-grid" id="m-fields"></div>
+      <p class="t13" id="m-error" style="color:rgb(var(--danger));margin-top:12px;" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close>Cancel</button>
+        <button class="btn btn-primary" id="m-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as O from './assets/app.js';
+
+    await O.boot('website');
+
+    const TABS = {
+      projects: { endpoint: 'website/projects', noun: 'project', blurb: 'Portfolio items shown in the work grid on octadevs.fun.',
+        fields: [
+          { key: 'title', label: 'Title', placeholder: 'Lumen Labs' },
+          { key: 'category', label: 'Category', placeholder: 'Mobile App' },
+          { key: 'status', label: 'Status', placeholder: 'Coming Soon' },
+          { key: 'project_url', label: 'Link', placeholder: 'https://' },
+          { key: 'image_url', label: 'Image URL' },
+          { key: 'description', label: 'Description', type: 'textarea', full: true },
+        ],
+        primary: (i) => i.title || 'Untitled project',
+        secondary: (i) => [i.category, i.status].filter(Boolean).join(' · ') },
+      team: { endpoint: 'website/team', noun: 'member', blurb: 'People shown in the about section, in the order listed here.',
+        fields: [
+          { key: 'name', label: 'Name', placeholder: 'Aarav Sharma' },
+          { key: 'role', label: 'Role', placeholder: 'Co-founder' },
+          { key: 'avatar_url', label: 'Photo URL' },
+          { key: 'bio', label: 'Bio', type: 'textarea', full: true },
+        ],
+        primary: (i) => i.name || 'Unnamed member',
+        secondary: (i) => i.role || '—' },
+      launch: { endpoint: 'website/launch', noun: 'banner', blurb: 'The countdown strip at the top of the site.' },
+    };
+
+    /* ---------------- tabs ---------------- */
+    document.getElementById('tabs').querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
+      document.querySelectorAll('#tabs .tab').forEach((x) => x.classList.toggle('active', x === t));
+      for (const key of Object.keys(TABS)) document.getElementById(`section-${key}`).style.display = key === t.dataset.tab ? '' : 'none';
+    }));
+
+    /* ---------------- collections ---------------- */
+    const modal = document.getElementById('modal');
+    O.wireModal(modal);
+    modal.querySelector('.modal-head [data-close]').innerHTML = O.icons.close;
+
+    // One shared modal; the collection that opened it registers itself here.
+    let modalCtx = null;
+
+    function collection(key, hostId) {
+      const cfg = TABS[key];
+      const host = document.getElementById(hostId);
+      const blurb = cfg.blurb;
+      host.innerHTML = `
+        <p class="section-blurb" style="margin:-6px 0 14px;">${O.esc(blurb)}</p>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
+          <button class="btn btn-primary">New ${cfg.noun}</button>
+        </div>
+        <ul class="rows"><li class="shimmer-row shimmer"></li><li class="shimmer-row shimmer"></li></ul>`;
+
+      let items = null;
+      const ul = host.querySelector('ul.rows');
+      const newBtn = host.querySelector('.btn-primary');
+
+      async function load() {
+        try { items = await O.api(`/api/${cfg.endpoint}`); }
+        catch (e) { O.toast(e.message, 'err'); items = []; }
+        render();
+      }
+
+      function render() {
+        if (!items.length) {
+          ul.outerHTML = `<div class="empty"><b>Nothing published</b><p>Add the first ${cfg.noun} — it goes live on the site right away.</p></div>`;
+          return;
+        }
+        ul.innerHTML = items.map((i, idx) => `
+          <li style="--d:${Math.min(idx * 45, 500)}ms;">
+            <span class="avatar" style="${i.avatar_url ? 'background-image:url(' + O.esc(i.avatar_url) + ');background-size:cover;' : ''}">${O.esc(O.initials(cfg.primary(i)))}</span>
+            <div class="row-main">
+              <div class="row-title">${O.esc(cfg.primary(i))}</div>
+              <div class="row-sub">${O.esc(cfg.secondary(i))}</div>
+            </div>
+            <div class="row-actions">
+              <button class="icon-btn" data-edit aria-label="Edit">${O.icons.edit}</button>
+              <button class="icon-btn danger" data-del aria-label="Delete">${O.icons.trash}</button>
+            </div>
+          </li>`).join('');
+        O.stagger(ul, 'li', 45);
+        ul.querySelectorAll('li').forEach((li, idx) => {
+          li.querySelector('[data-edit]').addEventListener('click', () => openEditor(items[idx]));
+          li.querySelector('[data-del]').addEventListener('click', async () => {
+            if (!confirm(`Remove ${cfg.primary(items[idx])} from the site?`)) return;
+            li.classList.add('leaving');
+            try {
+              await O.api(`/api/${cfg.endpoint}?id=${items[idx].id}`, { method: 'DELETE' });
+              await load();
+              O.toast('Removed');
+            } catch (e) { O.toast(e.message, 'err'); li.classList.remove('leaving'); }
+          });
+        });
+      }
+
+      async function openEditor(item) {
+        const editing = item ? { ...item } : { sort_order: items.length };
+        modalCtx = { cfg, editing, items, reload: load };
+        document.getElementById('m-title').textContent = item ? `Edit ${cfg.noun}` : `New ${cfg.noun}`;
+        document.getElementById('m-fields').innerHTML = cfg.fields.map((f) => `
+          <div class="${f.full ? 'full' : ''}">
+            <label class="label" for="f-${f.key}">${f.label}</label>
+            ${f.type === 'textarea'
+              ? `<textarea class="field" id="f-${f.key}">${O.esc(editing[f.key] ?? '')}</textarea>`
+              : `<input class="field" id="f-${f.key}" placeholder="${f.placeholder ?? ''}" value="${O.esc(editing[f.key] ?? '')}">`}
+          </div>`).join('');
+        document.getElementById('m-fields').querySelectorAll('input, textarea').forEach((el) => {
+          el.addEventListener('input', () => { editing[el.id.replace('f-', '')] = el.value; });
+        });
+        document.getElementById('m-error').hidden = true;
+        O.openModal(modal);
+      }
+
+      newBtn.addEventListener('click', () => openEditor(null));
+      return { load };
+    }
+
+    // The one and only save listener for the shared modal.
+    document.getElementById('m-save').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      if (!modalCtx) return;
+      const { cfg, editing, reload } = modalCtx;
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        const { id, sort_order, ...rest } = editing;
+        if (id) await O.api(`/api/${cfg.endpoint}`, { method: 'PUT', body: JSON.stringify({ id, sort_order, ...rest }) });
+        else await O.api(`/api/${cfg.endpoint}`, { method: 'POST', body: JSON.stringify({ sort_order, ...rest }) });
+        O.closeModal(modal);
+        await reload();
+        O.toast('Saved — live on the site');
+      } catch (err) { O.toast(err.message, 'err'); }
+      btn.disabled = false; btn.textContent = 'Save';
+    });
+
+    const projects = collection('projects', 'section-projects');
+    const teamColl = collection('team', 'section-team');
+
+    /* ---------------- launch banner ---------------- */
+    const launchHost = document.getElementById('section-launch');
+    launchHost.innerHTML = '<div class="card-flat" style="height:220px;display:grid;place-items:center;"><span class="shimmer" style="width:60%;height:14px;border-radius:4px;"></span></div>';
+    let launchForm = null;
+
+    async function loadLaunch() {
+      try { launchForm = await O.api('/api/website/launch'); }
+      catch (e) { O.toast(e.message, 'err'); launchForm = {}; }
+      paintLaunch();
+    }
+
+    function paintLaunch() {
+      launchHost.innerHTML = `
+        <div class="card" style="max-width:520px;padding:22px;color:inherit;">
+          <div style="display:grid;gap:14px;">
+            <div><label class="label">Headline</label>
+              <input class="field" id="l-title" value="${O.esc(launchForm.title || '')}" /></div>
+            <div><label class="label">Supporting line</label>
+              <input class="field" id="l-sub" value="${O.esc(launchForm.subtitle || '')}" /></div>
+            <div style="display:grid;gap:14px;">
+              <div><label class="label">Launch date</label>
+                <input class="field" type="date" id="l-date" value="${O.esc((launchForm.target_date || '').slice(0, 10))}" /></div>
+              <div><label class="label">Visibility</label>
+                <button class="btn btn-ghost" id="l-active" style="width:100%;justify-content:flex-start;">
+                  <span class="dot ${launchForm.is_active ? 'live' : ''}" style="margin-right:6px;"></span>
+                  ${launchForm.is_active ? 'Shown on site' : 'Hidden'}
+                </button></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:22px;align-items:center;">
+            <button class="btn btn-primary" id="l-save">Save changes</button>
+            <span class="t13 mid" id="l-saved" style="opacity:0;transition:opacity 200ms ease;">Saved</span>
+          </div>
+        </div>`;
+      document.getElementById('l-title').addEventListener('input', (e) => { launchForm.title = e.target.value; });
+      document.getElementById('l-sub').addEventListener('input', (e) => { launchForm.subtitle = e.target.value; });
+      document.getElementById('l-date').addEventListener('input', (e) => { launchForm.target_date = e.target.value; });
+      document.getElementById('l-active').addEventListener('click', () => { launchForm.is_active = !launchForm.is_active; paintLaunch(); });
+      document.getElementById('l-save').addEventListener('click', async (e) => {
+        e.currentTarget.disabled = true;
+        try {
+          launchForm = await O.api('/api/website/launch', { method: 'PUT', body: JSON.stringify(launchForm) });
+          document.getElementById('l-saved').style.opacity = '1';
+          setTimeout(() => { const s = document.getElementById('l-saved'); if (s) s.style.opacity = '0'; }, 2000);
+          O.toast('Banner updated');
+        } catch (err) { O.toast(err.message, 'err'); }
+        const b = document.getElementById('l-save'); if (b) b.disabled = false;
+      });
+    }
+
+    await Promise.all([projects.load(), teamColl.load(), loadLaunch()]);
+  </script>
+</body>
+</html>
