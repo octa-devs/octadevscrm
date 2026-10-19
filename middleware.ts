@@ -21,9 +21,17 @@ function jwks() {
 }
 
 async function readSession(request: NextRequest) {
+  // Unset env must degrade to "not logged in", never to a 500 from this edge
+  // function — which is exactly what MIDDLEWARE_INVOCATION_FAILED looks like
+  // on a fresh deploy whose vars have not been added yet.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.error('[auth] middleware: NEXT_PUBLIC_SUPABASE_URL and/or NEXT_PUBLIC_SUPABASE_ANON_KEY are not set.');
+    return null;
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
@@ -31,15 +39,20 @@ async function readSession(request: NextRequest) {
       },
     }
   );
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session?.access_token) return null;
-  if (!process.env.SUPABASE_JWKS_URL) return null;
+
   try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.access_token) return null;
+    if (!process.env.SUPABASE_JWKS_URL) return null;
     const { payload } = await jwtVerify(session.access_token, jwks(), {
       issuer: `${process.env.SUPABASE_URL}/auth/v1`,
     });
     return { role: String((payload as any).app_metadata?.role ?? 'employee') };
-  } catch {
+  } catch (err) {
+    // Either a stale/invalid cookie (expected, silent) or something genuinely
+    // broken in this environment — that is logged so it can be found in
+    // Vercel's function logs without guessing.
+    console.error('[auth] middleware readSession failed:', err);
     return null;
   }
 }
