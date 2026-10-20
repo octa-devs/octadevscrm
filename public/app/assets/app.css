@@ -340,9 +340,22 @@ ul.rows > li.leaving { animation: msg-out 220ms ease forwards; }
 /* ---------- chat ---------- */
 
 .chat-grid { display: grid; gap: 20px; grid-template-columns: 340px minmax(0, 1fr); }
-@media (max-width: 860px) { .chat-grid { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .chat-grid { grid-template-columns: 1fr; gap: 16px; } }
 .chat-pane { background: rgb(var(--surface)); border: 1px solid rgb(var(--line)); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; height: 540px; }
-@media (max-width: 860px) { .chat-pane { height: calc(100vh - 240px); } }
+
+/* Thread sheet on phones: opens over the whole screen, back button returns. */
+.thread-back { display: none; flex-shrink: 0; }
+@media (max-width: 860px) {
+  .chat-pane { height: min(58vh, 540px); }
+  .thread-pane { position: fixed; inset: 0; z-index: 55; height: 100dvh; border-radius: 0; border: 0;
+                 transform: translateX(104%); visibility: hidden;
+                 transition: transform 300ms var(--ease-out), visibility 0s linear 300ms; }
+  .thread-pane.bring { transform: none; visibility: visible; height: 100dvh;
+                       transition: transform 300ms var(--ease-out); }
+  .thread-pane .chat-log { padding-top: calc(16px + env(safe-area-inset-top)); }
+  .thread-pane .composer { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .thread-back { display: inline-grid; }
+}
 .convo-list { flex: 1; overflow-y: auto; }
 .convo-list > button { display: flex; width: 100%; gap: 12px; align-items: flex-start; padding: 14px 16px; background: none; border: 0; border-bottom: 1px solid rgb(var(--hair)); cursor: pointer; text-align: left; transition: background-color 140ms ease; }
 .convo-list > button:hover { background: rgb(var(--panel)); }
@@ -377,8 +390,51 @@ ul.rows > li.leaving { animation: msg-out 220ms ease forwards; }
 .dot.live { background: rgb(var(--ok)); animation: pulse-ring 2.2s ease-out infinite; }
 .dot.amber { background: rgb(var(--signal)); }
 
-/* ---------- login ---------- */
+/* ---------- cookie consent ---------- */
 
+.consent { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; }
+.consent-card { pointer-events: auto; width: min(560px, calc(100% - 24px)); margin: 0 12px calc(16px + env(safe-area-inset-bottom));
+                padding: 18px 20px; border-radius: 14px; background: rgb(var(--glass-bg) / 0.97);
+                backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+                border: 1px solid rgb(var(--line)); box-shadow: var(--shadow-card); }
+.consent-card p { margin: 0; font-size: 12.5px; line-height: 1.65; color: rgb(var(--mid)); }
+.consent-card b { color: rgb(var(--fg)); font-weight: 500; }
+.consent-card a { color: rgb(var(--signal)); text-decoration: none; }
+.consent-card a:hover { text-decoration: underline; }
+.consent-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+@media (max-width: 480px) {
+  .consent-actions { flex-direction: column-reverse; }
+  .consent-actions .btn { width: 100%; justify-content: center; text-align: center; }
+}
+.consent-link { flex-shrink: 0; padding: 0; border: 0; background: none; font-family: var(--font-mono); font-size: 10.5px;
+                letter-spacing: 0.1em; text-transform: uppercase; color: rgb(var(--dim)); cursor: pointer; }
+.consent-link:hover { color: rgb(var(--fg)); }
+.login-legal { margin-top: 18px; font-size: 11.5px; color: rgb(var(--dim)); text-align: center; }
+.login-legal a { color: rgb(var(--dim)); text-decoration: none; }
+.login-legal a:hover { color: rgb(var(--mid)); text-decoration: underline; }
+.consent-link:hover { text-decoration: underline; }
+
+/* ---------- mobile polish ---------- */
+
+/* iOS zooms into inputs with font-size < 16px; keep every tappable field calm. */
+@media (max-width: 768px) {
+  .field { font-size: 16px; }
+  .composer textarea { font-size: 16px; }
+  ul.rows > li { padding: 14px 14px; gap: 10px; }
+  .row-actions { gap: 8px; }
+  .icon-btn { width: 40px; height: 40px; }
+  .btn { min-height: 42px; }
+  .consent-card { padding: 16px 16px; }
+}
+
+/* Very small screens: KPI grid to a single column, page titles breathe. */
+@media (max-width: 480px) {
+  .kpis { grid-template-columns: 1fr; }
+  main { padding: 16px 12px 72px; }
+  .msg-body { max-width: 86%; }
+}
+
+/* ---------- login ---------- */
 .login-wrap { position: relative; min-height: 100vh; display: grid; place-items: center; padding: 20px; overflow: hidden; }
 .aurora { position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(90px); }
 .aurora i { position: absolute; border-radius: 50%; opacity: 0.5; }

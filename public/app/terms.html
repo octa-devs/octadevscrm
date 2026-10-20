@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0b0d" />
+  <title>Terms of service — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+  <style>
+    body { background: rgb(var(--canvas)); }
+    .legal-wrap { min-height: 100vh; display: flex; flex-direction: column; }
+    .legal-top { display: flex; align-items: center; gap: 14px; padding: 18px clamp(16px, 5vw, 48px); border-bottom: 1px solid rgb(var(--line)); position: sticky; top: 0; z-index: 10;
+                 backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgb(var(--surface) / 0.75); }
+    .legal-top img { height: 30px; width: 30px; object-fit: cover; }
+    .legal-top b { font-family: var(--font-display); font-size: 15px; letter-spacing: -0.03em; }
+    .legal-top .eyebrow { padding-top: 2px; }
+    .legal-top .btn { margin-left: auto; padding: 8px 14px; font-size: 12.5px; text-decoration: none; display: inline-flex; }
+    .legal-main { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: 44px clamp(16px, 5vw, 32px) 90px; }
+    .legal-main h1 { font-family: var(--font-display); font-size: clamp(28px, 6vw, 38px); font-weight: 600; letter-spacing: -0.04em; margin: 0; }
+    .legal-updated { margin-top: 10px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(var(--dim)); }
+    .legal-underline { margin-top: 18px; height: 2px; width: 64px; background: rgb(var(--signal)); border-radius: 2px; }
+    .legal-main section { margin-top: 36px; animation: rise 500ms var(--ease-out) both; }
+    .legal-main h2 { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 10px; }
+    .legal-main p, .legal-main li { font-size: 14px; line-height: 1.75; color: rgb(var(--mid)); margin: 8px 0; }
+    .legal-main ul { padding-left: 20px; }
+    .legal-main li::marker { color: rgb(var(--signal)); }
+    .legal-main b, .legal-main strong { color: rgb(var(--fg)); font-weight: 500; }
+    .legal-main code { font-family: var(--font-mono); font-size: 12px; color: rgb(var(--fg)); background: rgb(var(--panel)); padding: 1px 6px; border-radius: 6px; }
+    .legal-foot { padding: 20px clamp(16px, 5vw, 48px) calc(26px + env(safe-area-inset-bottom)); border-top: 1px solid rgb(var(--line));
+                  display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(var(--dim));
+                  background: rgb(var(--surface)); }
+    .legal-foot a { color: rgb(var(--mid)); text-decoration: none; }
+    .legal-foot a:hover { color: rgb(var(--fg)); }
+    @media (max-width: 560px) { .legal-top span.eyebrow { display: none; } .legal-top .btn { padding: 7px 11px; } }
+  </style>
+</head>
+<body>
+  <div class="legal-wrap">
+    <header class="legal-top">
+      <img src="/logo.png" alt="OCTA DEVS" />
+      <div><b>OCTA DEVS</b><div class="eyebrow">Terms of service</div></div>
+      <a class="btn btn-quiet" href="/app/login.html">Open the portal</a>
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle appearance"></button>
+    </header>
+
+    <main class="legal-main">
+      <h1>Terms of service</h1>
+      <p class="legal-updated">Last updated · 20 October 2026</p>
+      <div class="legal-underline"></div>
+
+      <section style="--d:60ms;">
+        <h2>What this portal is</h2>
+        <p>This portal at <code>/app</code> (also reached through octadevs.fun admin links) is the internal workspace of <b>OCTA DEVS</b>: CRM, the visitor inbox, team chat and website-content management for our own team. It is not a public product, and access is by invitation only.</p>
+      </section>
+
+      <section style="--d:110ms;">
+        <h2>Accounts and access</h2>
+        <ul>
+          <li>Accounts are issued by team owners. Roles decide what each account can do; owners can widen or narrow that at any time.</li>
+          <li>Your account is yours. <b>Don't share your password</b>, don't let someone else use your session, and pick a real password rather than a memorable one.</li>
+          <li>If you stop being part of the team, your owner should and will deactivate your account and reassign anything you held.</li>
+        </ul>
+      </section>
+
+      <section style="--d:160ms;">
+        <h2>Acceptable use</h2>
+        <ul>
+          <li>Don't put personal data into the CRM unless it's needed for that lead, deal or contact.</li>
+          <li>Treat visitor conversations as confidential — visitors wrote them to us, not to the world.</li>
+          <li>No probing, stress-testing or trying to walk past the permission system — including APIs you can technically reach. If you find a hole, tell an owner instead of walking through it.</li>
+          <li>Don't copy team data out of the portal to somewhere with weaker protection.</li>
+        </ul>
+      </section>
+
+      <section style="--d:210ms;">
+        <h2>Your data and our service</h2>
+        <p><b>Content stays yours.</b> The leads, deals, messages and website content in the portal belong to OCTA DEVS as a team, not to any individual member, and not to the tooling. If you leave, your content stays; if the team takes the service elsewhere, the content goes with it.</p>
+        <p>The portal is an internal tool provided <b>as is</b>. We aim to keep it available and honest, but there is no guarantee of uptime, and we may change or discontinue features as the team needs. Don't build your business on an expectation of backups you haven't verified.</p>
+      </section>
+
+      <section style="--d:260ms;">
+        <h2>Changes and termination</h2>
+        <p>We can update these terms as the product changes — the live page above is always the current terms, and the date tells you what's new. Team owners may suspend or delete any account that breaks these terms or puts team data at risk.</p>
+      </section>
+
+      <section style="--d:310ms;">
+        <h2>Contact</h2>
+        <p>Anything about these terms: message the team through the chat on <b>octadevs.fun</b> or the contact form there.</p>
+      </section>
+    </main>
+
+    <footer class="legal-foot">
+      <a href="/app/privacy.html">Privacy policy</a>
+      <a href="/app/login.html">octadevs portal</a>
+      <span style="margin-left:auto;">OCTA DEVS</span>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { wireTheme, initConsent } from './assets/app.js';
+    wireTheme();
+    initConsent();
+  </script>
+</body>
+</html>

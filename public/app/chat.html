@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+   <meta name="theme-color" content="#0b0b0d" />
   <title>Chat — OCTA DEVS Portal</title>
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,8 +78,9 @@
                 <p class="t13 dim" style="padding:16px;">Loading conversations…</p>
               </div>
             </div>
-            <div class="chat-pane" id="threadPane">
+            <div class="chat-pane thread-pane" id="threadPane">
               <div class="chat-head" id="threadHead">
+                <button class="icon-btn thread-back" id="threadBack" aria-label="Back to list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button>
                 <span class="who"><b class="t13" id="threadName">Pick a conversation</b>
                 <span class="row-meta" id="threadWho"></span></span>
                 <button class="btn btn-ghost" id="threadStatus" style="padding:6px 12px; font-size:12px; display:none;"></button>
@@ -104,8 +106,9 @@
                 <p class="t13 dim" style="padding:12px 16px;">Loading people…</p>
               </div>
             </div>
-            <div class="chat-pane">
+            <div class="chat-pane thread-pane" id="roomThreadPane">
               <div class="chat-head">
+                <button class="icon-btn thread-back" id="roomBack" aria-label="Back to rooms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button>
                 <span class="who"><b class="t13" id="roomName"># general</b>
                 <span class="row-meta" id="roomWho"></span></span>
               </div>
@@ -149,6 +152,9 @@
 
     const convoList = document.getElementById('convoList');
     const threadLog = document.getElementById('threadLog');
+    const threadPane = document.getElementById('threadPane');
+    // In list mode on phones the sheet slides away again.
+    document.getElementById('threadBack').addEventListener('click', () => threadPane.classList.remove('bring'));
     const threadName = document.getElementById('threadName');
     const threadWho = document.getElementById('threadWho');
     const threadStatus = document.getElementById('threadStatus');
@@ -156,8 +162,7 @@
     const input = document.getElementById('composerInput');
     const sendBtn = document.getElementById('sendBtn');
 
-    function renderConvos() {
-      if (!convos) return;
+    function renderConvos() {      if (!convos) return;
       if (!convos.length) {
         convoList.innerHTML = '<p class="t13 dim" style="padding:16px;">No visitors have written yet. When someone opens the chat on octadevs.fun, they land here.</p>';
         return;
@@ -219,6 +224,7 @@
     async function openConvo(id) {
       activeId = id;
       messages = null;
+      document.getElementById('threadPane').classList.add('bring'); // phones: open the thread sheet
       renderConvos(); renderThread();
       try {
         const res = await O.api(`/api/chat/conversations/${id}`);
@@ -300,6 +306,8 @@
     /* ================ TEAM ================ */
     const roomsEl = document.getElementById('rooms');
     const roomLog = document.getElementById('roomLog');
+    const roomThread = document.getElementById('roomThreadPane');
+    document.getElementById('roomBack').addEventListener('click', () => roomThread.classList.remove('bring'));
     const roomComposer = document.getElementById('roomComposer');
     const roomInput = document.getElementById('roomInput');
     const roomName = document.getElementById('roomName');
@@ -361,6 +369,7 @@
       partner = p;
       roomMsgs = null;
       roomSeen = new Set();
+      document.getElementById('roomThreadPane').classList.add('bring'); // phones: open the room sheet
       renderRooms(); renderRoomMsgs();
       await pollTeam(true);
     }

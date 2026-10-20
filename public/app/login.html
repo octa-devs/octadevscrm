@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+   <meta name="theme-color" content="#0b0b0d" />
   <title>Sign in — OCTA DEVS Portal</title>
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,11 +49,15 @@
         <span class="eyebrow">Octa · internal</span>
         <button class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
       </div>
+
+      <div class="login-legal">
+        <a href="/app/privacy.html">Privacy policy</a> · <a href="/app/terms.html">Terms of service</a> · <button type="button" class="consent-link" id="cookieSettings">Cookies</button>
+      </div>
     </main>
   </div>
 
   <script type="module">
-    import { icons, api } from './assets/app.js';
+    import { icons, api, initConsent, resetConsent } from './assets/app.js';
     import { SUPABASE_URL, SUPABASE_ANON_KEY } from './assets/config.js';
 
     const card = document.getElementById('card');
@@ -60,6 +65,8 @@
     const btn = document.getElementById('submit');
     const pw = document.getElementById('password');
     document.getElementById('togglePw').innerHTML = icons.eye;
+    initConsent();
+    document.getElementById('cookieSettings').addEventListener('click', resetConsent);
 
     // Card spotlight follows the cursor.
     stage.addEventListener('pointermove', (e) => {

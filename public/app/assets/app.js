@@ -167,8 +167,7 @@ function applyTheme(paper) {
   try { localStorage.setItem('octa-theme', paper ? 'paper' : 'ink'); } catch { /* private mode */ }
 }
 
-function wireTheme() {
-  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+export function wireTheme() {  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
     btn.innerHTML = document.documentElement.classList.contains('paper') ? icons.sun : icons.moon;
     btn.addEventListener('click', () => {
       applyTheme(!document.documentElement.classList.contains('paper'));
@@ -218,6 +217,18 @@ export async function boot(pageId) {
 
   spotlight(document);
   reveal(document);
+  initConsent();
+
+  // Small "Cookies" reopen link next to the theme toggle in the rail.
+  const footRow = document.querySelector('.rail .foot div');
+  if (footRow && !footRow.querySelector('[data-consent-settings]')) {
+    const c = document.createElement('button');
+    c.className = 'consent-link';
+    c.textContent = 'Cookies';
+    c.dataset.consentSettings = '1';
+    c.addEventListener('click', resetConsent);
+    footRow.prepend(c);
+  }
   return user;
 }
 
@@ -238,4 +249,65 @@ export async function refreshBadge() {
     badge.textContent = String(count);
     badge.classList.toggle('show', count > 0);
   } catch { /* offline or anonymous — leave the badge hidden */ }
+}
+
+/* ---------- cookie consent ---------- */
+
+const CONSENT_KEY = 'octa-consent';
+
+const consentMarkup = `
+  <div class="consent" id="consent" role="dialog" aria-label="Cookies" aria-live="polite">
+    <div class="consent-card rise">
+      <p>
+        <b>Only the essentials, ever.</b> The portal uses one strictly-necessary
+        sign-in cookie and a couple of browser preferences (theme, this choice).
+        No ads, no analytics trackers, no third-party pixels.
+        <a href="/app/privacy.html">Privacy policy</a>
+      </p>
+      <div class="consent-actions">
+        <button class="btn btn-quiet" data-consent="necessary" style="margin:0;">Essential only</button>
+        <button class="btn btn-primary" data-consent="all" style="margin:0;">Accept all</button>
+      </div>
+    </div>
+  </div>`;
+
+function dismissConsent(toastText) {
+  const layer = document.getElementById('consent');
+  if (layer) {
+    layer.style.opacity = '0';
+    layer.style.transition = 'opacity 240ms ease';
+    setTimeout(() => layer.remove(), 260);
+  }
+  document.body.style.removeProperty('--consent-pad');
+  if (toastText) toast(toastText);
+}
+
+/**
+ * One-time consent banner, shown on every page until the visitor chooses.
+ * Re-openable any moment via resetConsent() (the rail's Cookie settings link).
+ */
+export function initConsent() {
+  let saved = null;
+  try { saved = localStorage.getItem(CONSENT_KEY); } catch { /* private mode */ }
+  if (saved) return;
+
+  if (document.getElementById('consent')) return;
+  document.body.insertAdjacentHTML('beforeend', consentMarkup);
+  const layer = document.getElementById('consent');
+  layer.querySelectorAll('[data-consent]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem(CONSENT_KEY, btn.dataset.consent); } catch { /* private mode */ }
+      dismissConsent(btn.dataset.consent === 'all' ? 'Thanks — preference saved' : 'Keeping it essential');
+    })
+  );
+  // Give the banner room at the bottom without covering content permanently.
+  document.body.style.setProperty('--consent-pad', '1');
+}
+
+/** Re-show the banner (used by the rail's "Cookie settings" link). */
+export function resetConsent() {
+  try { localStorage.removeItem(CONSENT_KEY); } catch { /* private mode */ }
+  dismissConsent('Choose again');
+  document.getElementById('consent')?.remove();
+  initConsent();
 }

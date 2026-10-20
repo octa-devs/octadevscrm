@@ -142,6 +142,10 @@ export async function middleware(request: NextRequest) {
 
   // 2. The static app: everything except its login page wants a session.
   if (path.startsWith('/app/')) {
+    // Privacy and terms stay public: the cookie banner links to them, and the
+    // people it talks to are usually not signed in yet.
+    if (path === '/app/privacy.html' || path === '/app/terms.html') return NextResponse.next();
+
     if (path === '/app/login.html') {
       // Nobody sees a login form they do not need.
       const session = await readSession(request);
