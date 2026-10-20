@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0b0d" />
-  <title>Notice board — OCTA DEVS Portal</title>
+  <title>Company ads — OCTA DEVS Portal</title>
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -66,7 +66,7 @@
         <div class="group-label eyebrow">Connect</div>
         <ul>
           <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
-          <li><a class="nav-item" data-page="ads" href="/app/ads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Notice board</span></a></li>
+          <li><a class="nav-item" data-page="ads" href="/app/ads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Company ads</span></a></li>
         </ul>
         <div class="group-label eyebrow">Admin</div>
         <ul>
@@ -93,13 +93,13 @@
       <main>
         <header style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
           <div>
-            <h1 class="page-title">Notice board</h1>
-            <p class="page-intro">Anything worth telling the team: things for sale, services on offer, requests, events. Anyone signed in can post and everyone sees it — add a poster image or a YouTube/Vimeo video to make it stand out.</p>
+            <h1 class="page-title">Company ads</h1>
+            <p class="page-intro">Ads for the company, made by the team: events, offers, launches, announcements. Anyone signed in can post and everyone sees it — add a poster image or a YouTube/Vimeo video to make it stand out.</p>
             <div class="header-underline"></div>
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
             <input class="field" id="q" placeholder="Search the board" style="width:190px;" aria-label="Search ads" />
-            <button class="btn btn-primary" id="newBtn">Post an ad</button>
+            <button class="btn btn-primary" id="newBtn">Post a company ad</button>
           </div>
         </header>
 
@@ -117,7 +117,7 @@
   <div class="modal-layer" id="modal">
     <div class="scrim-full"></div>
     <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-head"><b>Post an ad</b><button class="icon-btn" data-close></button></div>
+      <div class="modal-head"><b>Post a company ad</b><button class="icon-btn" data-close></button></div>
       <div class="form-grid">
         <div><label class="label">Type</label>
           <select class="field" id="a-tag"></select></div>
@@ -186,8 +186,8 @@
 
       if (!shown.length) {
         grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">
-          <b>${needle || tagFilter ? 'Nothing matches' : 'The board is empty'}</b>
-          <p>${needle || tagFilter ? 'Try a different word or type — or clear the filters.' : 'Post the first ad and the whole team will see it here.'}</p>
+          <b>${needle || tagFilter ? 'Nothing matches' : 'No company ads yet'}</b>
+          <p>${needle || tagFilter ? 'Try a different word or type — or clear the filters.' : 'Post the first one and the whole team will see it here.'}</p>
         </div>`;
         return;
       }
