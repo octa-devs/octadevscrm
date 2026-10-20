@@ -32,7 +32,11 @@ export const stamp = (iso) => iso
 export async function api(path, options = {}) {
   const res = await fetch(path, {
     ...options,
-    headers: options.body ? { 'content-type': 'application/json', ...(options.headers || {}) } : options.headers,
+    headers: options.body
+      ? options.body instanceof FormData
+        ? { ...(options.headers || {}) } // let the browser set the multipart boundary
+        : { 'content-type': 'application/json', ...(options.headers || {}) }
+      : options.headers,
   });
   let data = null;
   try { data = await res.json(); } catch { /* non-JSON */ }

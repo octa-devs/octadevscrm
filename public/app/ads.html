@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en" class="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0b0d" />
+  <title>Notice board — OCTA DEVS Portal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/app/assets/app.css" />
+  <script>(function(){try{var t=localStorage.getItem('octa-theme');var p=t==='paper'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches);if(p)document.documentElement.classList.add('paper');}catch(e){}})();</script>
+  <style>
+    .ads-grid { display: grid; gap: 14px; }
+    @media (min-width: 861px) { .ads-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .ad-card { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; background: rgb(var(--surface));
+               border: 1px solid rgb(var(--line)); border-radius: 14px; box-shadow: var(--shadow-card);
+               transition: border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 200ms ease; }
+    .ad-card:hover { border-color: rgb(var(--dim) / 0.45); transform: translateY(-2px); box-shadow: 0 26px 54px -28px rgb(0 0 0 / 0.55); }
+    .ad-top { display: flex; align-items: center; gap: 8px; }
+    .ad-top .when { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; color: rgb(var(--dim)); }
+    .ad-card h2 { margin: 0; font-family: var(--font-display); font-size: 17.5px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; }
+    .ad-body { margin: 0; font-size: 13.5px; line-height: 1.65; color: rgb(var(--mid)); white-space: pre-wrap; overflow-wrap: anywhere;
+               display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+    .ad-body.open { display: block; -webkit-line-clamp: unset; }
+    .ad-more { align-self: flex-start; margin: -6px 0 0; }
+    .ad-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: rgb(var(--signal)); text-decoration: none;
+               overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    .ad-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .ad-link:hover { text-decoration: underline; }
+    .ad-media { margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgb(var(--hair)); }
+    .ad-media img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+    .ad-video { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; border: 1px solid rgb(var(--hair)); background: #000; }
+    .ad-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .file { display: block; width: 100%; padding: 9px 12px; border: 1px dashed rgb(var(--dim) / 0.55); border-radius: 10px;
+            background: rgb(var(--panel)); color: rgb(var(--mid)); font-size: 12.5px; cursor: pointer; }
+    .file:hover { border-color: rgb(var(--signal) / 0.55); }
+    .ad-foot { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid rgb(var(--hair)); }
+    .ad-foot .row-meta { margin: 0; }
+    .ad-foot .row-actions { margin-left: auto; }
+    #chips .chip { cursor: pointer; transition: border-color 140ms ease, color 140ms ease, background 140ms ease; }
+    #chips .chip:hover { border-color: rgb(var(--dim)); color: rgb(var(--fg)); }
+    @media (max-width: 480px) {
+      .ad-card { padding: 16px; }
+      .ad-card h2 { font-size: 16.5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <aside class="rail">
+      <div class="brand"><img src="/logo.png" alt="" /><div><b>OCTA DEVS</b><span class="eyebrow">Portal</span></div></div>
+      <nav>
+        <div class="group-label eyebrow">Overview</div>
+        <ul>
+          <li><a class="nav-item" data-page="dashboard" href="/app/dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">CRM</div>
+        <ul>
+          <li><a class="nav-item" data-page="data" data-entity="leads" href="/app/data.html?entity=leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 3 8 2-4h5"/></svg><span>Leads</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="contacts" href="/app/data.html?entity=contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Contacts</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="deals" href="/app/data.html?entity=deals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5C17 4.5 14.8 3.5 12 3.5S7 4.7 7 6.7s2 2.9 5 3.3 5 1.2 5 3.3-2.2 3.2-5 3.2-5-1-5-3"/></svg><span>Deals</span></a></li>
+          <li><a class="nav-item" data-page="data" data-entity="tasks" href="/app/data.html?entity=tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg><span>Tasks</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Connect</div>
+        <ul>
+          <li><a class="nav-item" data-page="chat" href="/app/chat.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Chat</span><span class="badge"></span></a></li>
+          <li><a class="nav-item" data-page="ads" href="/app/ads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Notice board</span></a></li>
+        </ul>
+        <div class="group-label eyebrow">Admin</div>
+        <ul>
+          <li><a class="nav-item" data-page="website" data-perm="website.manage" href="/app/website.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Website</span></a></li>
+          <li><a class="nav-item" data-page="users" data-perm="people.manage|roles.manage" href="/app/users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/><path d="M16 3.5a4 4 0 0 1 0 9M22 21c-.6-2.4-2-4-4-4.6"/></svg><span>People</span></a></li>
+          <li><a class="nav-item" data-page="roles" data-perm="roles.manage" href="/app/roles.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Roles</span></a></li>
+        </ul>
+      </nav>
+      <div class="foot">
+        <div class="whoami"></div>
+        <button class="btn btn-quiet signout" data-signout>Sign out</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <button class="icon-btn ttheme" data-theme-toggle aria-label="Toggle appearance"></button>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="topbar">
+        <button class="icon-btn" data-drawer aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="brand-mobile"><b>OCTA DEVS</b></span>
+        <button class="icon-btn" data-theme-toggle style="margin-left:auto;" aria-label="Toggle appearance"></button>
+      </div>
+      <main>
+        <header style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+          <div>
+            <h1 class="page-title">Notice board</h1>
+            <p class="page-intro">Anything worth telling the team: things for sale, services on offer, requests, events. Anyone signed in can post and everyone sees it — add a poster image or a YouTube/Vimeo video to make it stand out.</p>
+            <div class="header-underline"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input class="field" id="q" placeholder="Search the board" style="width:190px;" aria-label="Search ads" />
+            <button class="btn btn-primary" id="newBtn">Post an ad</button>
+          </div>
+        </header>
+
+        <section style="margin-top:24px;">
+          <div id="chips" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+          <div class="ads-grid" id="grid" style="margin-top:16px;">
+            <div class="card-flat" style="height:150px;overflow:hidden;"><div class="shimmer" style="height:100%;"></div></div>
+            <div class="card-flat" style="height:150px;overflow:hidden;"><div class="shimmer" style="height:100%;"></div></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-layer" id="modal">
+    <div class="scrim-full"></div>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><b>Post an ad</b><button class="icon-btn" data-close></button></div>
+      <div class="form-grid">
+        <div><label class="label">Type</label>
+          <select class="field" id="a-tag"></select></div>
+        <div><label class="label">Title</label>
+          <input class="field" id="a-title" maxlength="90" placeholder="Bike for sale, or: looking for a designer" /></div>
+        <div class="full"><label class="label">Details</label>
+          <textarea class="field" id="a-body" rows="5" maxlength="2000" placeholder="What it is, condition, price, how to reach you — anything the team should know."></textarea></div>
+        <div class="full"><label class="label">Poster image <span class="dim">(optional)</span></label>
+          <input class="file" id="a-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" /></div>
+        <div class="full"><label class="label">Video <span class="dim">(optional · YouTube or Vimeo)</span></label>
+          <input class="field" id="a-video" inputmode="url" placeholder="https://www.youtube.com/watch?v=…" /></div>
+        <div class="full"><label class="label">Link <span class="dim">(optional)</span></label>
+          <input class="field" id="a-link" inputmode="url" placeholder="https://…" /></div>
+      </div>
+      <p class="t13" id="a-error" style="color:rgb(var(--danger));margin-top:12px;" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close>Cancel</button>
+        <button class="btn btn-primary" id="a-save">Publish</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as O from './assets/app.js';
+
+    const user = await O.boot('ads');
+
+    let ads = [];
+    let tags = ['Offer', 'Looking for', 'Service', 'Announcement'];
+    let canModerate = false;
+    let query = '';
+    let tagFilter = null;
+    let expanded = new Set();
+
+    const grid = document.getElementById('grid');
+    const modal = document.getElementById('modal');
+    const q = document.getElementById('q');
+
+    O.wireModal(modal);
+    modal.querySelector('.modal-head [data-close]').innerHTML = O.icons.close;
+
+    const linkHost = (url) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } };
+    const mine = (ad) => String(ad.created_by).toLowerCase() === String(user?.email ?? '').toLowerCase();
+    const canDelete = (ad) => mine(ad) || canModerate;
+
+    function renderChips() {
+      const counts = {};
+      for (const a of ads) counts[a.tag] = (counts[a.tag] ?? 0) + 1;
+      document.getElementById('chips').innerHTML = Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([tag, n]) => `<button class="chip ${tagFilter === tag ? 'signal' : ''}" data-tag="${O.esc(tag)}">${O.esc(tag)} <b>${n}</b></button>`)
+        .join('');
+      document.querySelectorAll('#chips [data-tag]').forEach((b) => {
+        b.addEventListener('click', () => {
+          tagFilter = tagFilter === b.dataset.tag ? null : b.dataset.tag;
+          render();
+        });
+      });
+    }
+
+    function render() {
+      renderChips();
+      const needle = query.trim().toLowerCase();
+      const shown = ads.filter((a) => (!tagFilter || a.tag === tagFilter) && (!needle ||
+        `${a.title} ${a.body} ${a.created_by_name} ${a.tag}`.toLowerCase().includes(needle)));
+
+      if (!shown.length) {
+        grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">
+          <b>${needle || tagFilter ? 'Nothing matches' : 'The board is empty'}</b>
+          <p>${needle || tagFilter ? 'Try a different word or type — or clear the filters.' : 'Post the first ad and the whole team will see it here.'}</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = shown.map((a, idx) => {
+        const isOpen = expanded.has(a.id);
+        return `
+        <article class="ad-card in" style="--d:${Math.min(idx * 55, 440)}ms;">
+          <div class="ad-top">
+            <span class="chip signal">${O.esc(a.tag)}</span>
+            <span class="when">${O.esc(O.timeAgo(a.created_at))}</span>
+          </div>
+          ${a.image ? `<div class="ad-media"><img src="${O.esc(a.image)}" alt="Poster for ${O.esc(a.title)}" loading="lazy" /></div>` : ''}
+          <h2>${O.esc(a.title)}</h2>
+          <p class="ad-body ${isOpen ? 'open' : ''}" data-body>${O.esc(a.body)}</p>
+          <button class="consent-link ad-more" data-more="${O.esc(a.id)}" hidden>${isOpen ? 'Show less' : 'Show more'}</button>
+          ${a.link ? `<a class="ad-link" href="${O.esc(a.link)}" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
+              <span>${O.esc(linkHost(a.link))}</span></a>` : ''}
+          ${a.video ? `<div class="ad-video"><iframe src="${O.esc(a.video)}" title="Video" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>` : ''}
+          <footer class="ad-foot">
+            <span class="avatar sm">${O.esc(O.initials(a.created_by_name || a.created_by))}</span>
+            <span class="row-meta">${mine(a) ? 'You' : O.esc(a.created_by_name || a.created_by)}</span>
+            <div class="row-actions">
+              ${canDelete(a) ? `<button class="icon-btn danger" data-del="${O.esc(a.id)}" aria-label="Take down">${O.icons.trash}</button>` : ''}
+            </div>
+          </footer>
+        </article>`;
+      }).join('');
+
+      // "Show more" only when the text actually clips.
+      grid.querySelectorAll('[data-body]').forEach((p) => {
+        const more = p.parentElement.querySelector('[data-more]');
+        if (!more) return;
+        if (!p.classList.contains('open') && p.scrollHeight > p.clientHeight + 4) more.hidden = false;
+      });
+      grid.querySelectorAll('[data-more]').forEach((b) => b.addEventListener('click', () => {
+        const id = b.dataset.more;
+        const card = b.closest('.ad-card');
+        const body = card.querySelector('[data-body]');
+        const open = !body.classList.contains('open');
+        body.classList.toggle('open', open);
+        b.textContent = open ? 'Show less' : 'Show more';
+        if (open) expanded.add(id); else expanded.delete(id);
+      }));
+      grid.querySelectorAll('[data-del]').forEach((b) => b.addEventListener('click', () => removeAd(b.dataset.del)));
+    }
+
+    async function removeAd(id) {
+      if (!confirm('Take this ad off the board?')) return;
+      try {
+        await O.api(`/api/ads?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+        ads = ads.filter((a) => a.id !== id);
+        render();
+        O.toast('Ad removed');
+      } catch (e) { O.toast(e.message, 'err'); }
+    }
+
+    function openComposer() {
+      const sel = document.getElementById('a-tag');
+      sel.innerHTML = tags.map((t) => `<option value="${O.esc(t)}">${O.esc(t)}</option>`).join('');
+      document.getElementById('a-title').value = '';
+      document.getElementById('a-body').value = '';
+      document.getElementById('a-link').value = '';
+      document.getElementById('a-image').value = '';
+      document.getElementById('a-video').value = '';
+      document.getElementById('a-error').hidden = true;
+      O.openModal(modal);
+      setTimeout(() => document.getElementById('a-title').focus(), 120);
+    }
+
+    document.getElementById('a-save').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      const errEl = document.getElementById('a-error');
+      const payload = {
+        tag: document.getElementById('a-tag').value,
+        title: document.getElementById('a-title').value,
+        body: document.getElementById('a-body').value,
+        link: document.getElementById('a-link').value,
+        video: document.getElementById('a-video').value,
+        image: '',
+      };
+      btn.disabled = true;
+      try {
+        const file = document.getElementById('a-image').files[0];
+        if (file) {
+          btn.textContent = 'Uploading image…';
+          const fd = new FormData();
+          fd.append('file', file);
+          const up = await O.api('/api/ads/media', { method: 'POST', body: fd });
+          payload.image = up.url;
+        }
+        btn.textContent = 'Publishing…';
+        const { ad } = await O.api('/api/ads', { method: 'POST', body: JSON.stringify(payload) });
+        ads = [ad, ...ads];
+        O.closeModal(modal);
+        render();
+        O.toast('Posted — the team can see it now');
+        document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.hidden = false;
+      }
+      btn.disabled = false; btn.textContent = 'Publish';
+    });
+
+    async function load() {
+      try {
+        const res = await O.api('/api/ads');
+        ads = res.ads ?? [];
+        tags = res.tags ?? tags;
+        canModerate = !!res.canModerate;
+        render();
+      } catch (e) {
+        grid.innerHTML = `<div class="empty" style="grid-column:1/-1;"><b>Couldn't load the board</b><p>${O.esc(e.message)}</p></div>`;
+      }
+    }
+
+    q.addEventListener('input', () => { query = q.value; render(); });
+    document.getElementById('newBtn').addEventListener('click', openComposer);
+    await load();
+  </script>
+</body>
+</html>
