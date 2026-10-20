@@ -171,11 +171,45 @@ function applyTheme(paper) {
   try { localStorage.setItem('octa-theme', paper ? 'paper' : 'ink'); } catch { /* private mode */ }
 }
 
-export function wireTheme() {  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
-    btn.innerHTML = document.documentElement.classList.contains('paper') ? icons.sun : icons.moon;
-    btn.addEventListener('click', () => {
-      applyTheme(!document.documentElement.classList.contains('paper'));
-      btn.innerHTML = document.documentElement.classList.contains('paper') ? icons.sun : icons.moon;
+function paintToggles() {
+  const paper = document.documentElement.classList.contains('paper');
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.innerHTML = paper ? icons.sun : icons.moon;
+  });
+}
+
+/**
+ * Theme switch as a circular ripple from the toggle, like cosmictaser.de5.net:
+ * the View Transitions API captures the new theme, then a clip-path circle
+ * expands from the click point over the crossfade. Falls back to an instant
+ * swap where view transitions are unavailable or motion is reduced.
+ */
+export function wireTheme() {
+  paintToggles();
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const next = !document.documentElement.classList.contains('paper');
+      const root = document.documentElement;
+      const swap = () => { applyTheme(next); paintToggles(); };
+
+      if (reduced() || typeof document.startViewTransition !== 'function') { swap(); return; }
+
+      root.classList.add('theme-ripple');
+      const t = document.startViewTransition(swap);
+      if (!t) { root.classList.remove('theme-ripple'); swap(); return; }
+
+      const x = e.clientX || window.innerWidth - 48;
+      const y = e.clientY || 48;
+      const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      t.ready.then(() => {
+        root.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          { duration: 600, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root' }
+        );
+      }).catch(() => {});
+      t.finished.finally(() => root.classList.remove('theme-ripple'));
     });
   });
 }

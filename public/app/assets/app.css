@@ -458,6 +458,11 @@ ul.rows > li.leaving { animation: msg-out 220ms ease forwards; }
 .ttheme { width: 34px; height: 34px; }
 .ttheme svg { width: 18px; height: 18px; }
 
+/* While a switch runs, the default view-transition crossfade is off — the
+   clip-path circle in wireTheme() is the only thing animating. */
+html.theme-ripple::view-transition-old(root) { animation: none; z-index: 1; }
+html.theme-ripple::view-transition-new(root) { animation: none; z-index: 2; }
+
 /* ---------- animations ---------- */
 
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }

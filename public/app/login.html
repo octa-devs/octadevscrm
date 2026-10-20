@@ -57,7 +57,7 @@
   </div>
 
   <script type="module">
-    import { icons, api, initConsent, resetConsent } from './assets/app.js';
+    import { icons, api, initConsent, resetConsent, wireTheme } from './assets/app.js';
     import { SUPABASE_URL, SUPABASE_ANON_KEY } from './assets/config.js';
 
     const card = document.getElementById('card');
@@ -66,6 +66,7 @@
     const pw = document.getElementById('password');
     document.getElementById('togglePw').innerHTML = icons.eye;
     initConsent();
+    wireTheme();
     document.getElementById('cookieSettings').addEventListener('click', resetConsent);
 
     // Card spotlight follows the cursor.
