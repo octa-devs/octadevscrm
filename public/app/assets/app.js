@@ -183,11 +183,20 @@ export async function boot(pageId) {
   wireTheme();
   stagger(document, '.rail li, [data-stagger]', 45);
 
+  // Mobile drawer: burger toggles, scrim closes, a tapped link closes first.
   const drawer = document.querySelector('.rail');
   const scrim = document.querySelector('.scrim');
   const burger = document.querySelector('[data-drawer]');
-  burger?.addEventListener('click', () => { drawer.classList.add('open'); scrim?.classList.add('open'); });
-  scrim?.addEventListener('click', () => { drawer.classList.remove('open'); scrim.classList.remove('open'); });
+  const closeDrawer = () => { drawer?.classList.remove('open'); scrim?.classList.remove('open'); document.body.style.overflow = ''; };
+  drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => closeDrawer()));
+  burger?.addEventListener('click', () => {
+    const opening = !drawer.classList.contains('open');
+    drawer.classList.toggle('open', opening);
+    scrim?.classList.toggle('open', opening);
+    document.body.style.overflow = opening ? 'hidden' : '';
+  });
+  scrim?.addEventListener('click', closeDrawer);
+  window.addEventListener('resize', () => { if (window.innerWidth > 1024) closeDrawer(); });
 
   // Sign-in identity in the rail footer.
   const user = await requireUser();

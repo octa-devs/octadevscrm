@@ -145,8 +145,10 @@ button { font: inherit; color: inherit; }
 main { width: 100%; max-width: 1180px; margin: 0 auto; padding: 32px 32px 96px; }
 @media (max-width: 1024px) { main { padding: 20px 16px 80px; } }
 
+/* Drawer must sit ABOVE the scrim, or taps on its links hit the overlay
+   and the menu closes without ever navigating. scrim 45 > topbar 40. */
 @media (max-width: 1024px) {
-  .rail { position: fixed; inset: 0 auto 0 0; width: 85%; max-width: 300px; transform: translateX(-102%); transition: transform 260ms var(--ease-out); }
+  .rail { position: fixed; inset: 0 auto 0 0; z-index: 50; width: 85%; max-width: 300px; transform: translateX(-102%); transition: transform 260ms var(--ease-out); }
   .rail.open { transform: none; }
   .scrim { position: fixed; inset: 0; z-index: 45; background: rgb(0 0 0 / 0.6); opacity: 0; pointer-events: none; transition: opacity 240ms ease; }
   .scrim.open { opacity: 1; pointer-events: auto; }
